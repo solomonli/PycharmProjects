@@ -57,7 +57,19 @@ class Robot:
     def __str__(self):
         return "Name: " + self.__name + ", Build Year: " +  str(self.__build_year)
 
-     
+    
+class A():
+    
+    def __init__(self):
+        self.__priv = "I am private"
+        self._prot = "I am protected"
+        self.pub = "I am public"
+
+        
+class B():
+	b = 'old'
+
+  
 if __name__ == "__main__":
     x = Robot("Marvin", 1979)
     y = Robot("Caliban", 1943)
@@ -66,3 +78,19 @@ if __name__ == "__main__":
         if rob.get_name() == "Caliban":
             rob.set_build_year(1993)
         print("I was built in the year " + str(rob.get_build_year()) + "!")
+
+    
+    aa = A()
+    aa.pub += " and my value can be changed"
+    print(x.pub)
+    aa._prot += " and my value can be changed too"
+    print(aa._prot)
+    # x.__priv += 'whatever'    
+
+    
+    X = B()
+    Y = B()
+    print(X.b, Y.b)
+    X.b = 'new'
+    B.b = 'newer'
+    print(X.b, Y.b, B.b)     
