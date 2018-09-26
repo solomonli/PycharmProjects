@@ -9,13 +9,8 @@ def array_count9(nums):
     :param nums: list of ints
     :return: int
     """
-    count = 0
-    
-    for i in range(len(nums)):
-        if nums[i] == 9:
-            count += 1
 
-    return count
+    return nums.count(9)
 
 
 print(array_count9([1, 2, 9]))

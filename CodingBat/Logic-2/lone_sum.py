@@ -13,26 +13,25 @@ def lone_sum(a, b, c):
     :param c: int
     :return: int
     """
-    if a == b == c:
-        return 0
-    elif a == b:
-        return c
-    elif b == c:
-        return a
-    elif a == c:
-        return b
-    else:
-        return a + b + c
+    # if a == b == c:
+    #     return 0
+    # elif a == b:
+    #     return c
+    # elif b == c:
+    #     return a
+    # elif a == c:
+    #     return b
+    # else:
+    #     return a + b + c
+
+    s = 0
+    lst = [a, b, c]
+    for i in lst:
+        if lst.count(i) == 1:   # count the number of occurrence of a value
+            s += i
+    return s
 
 
 print(lone_sum(1, 2, 3))
 print(lone_sum(3, 2, 3))
 print(lone_sum(3, 3, 3))
-
-def lone_sum(a, b, c):
-sum = 0
-lst = [a, b, c]
-for i in lst:
-if lst.count(i) == 1:
-sum += i
-return sum
