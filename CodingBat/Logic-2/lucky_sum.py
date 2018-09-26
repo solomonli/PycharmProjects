@@ -23,9 +23,6 @@ def lucky_sum(a, b, c):
     else:
         return a + b + c
 
-    # l = [0 if i == 13 else i for i in [a, b, c]]
-    # return sum(l)
-
 
 print(lucky_sum(1, 2, 3))
 print(lucky_sum(1, 2, 13))
