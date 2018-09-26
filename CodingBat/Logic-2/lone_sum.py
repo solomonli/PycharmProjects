@@ -28,3 +28,11 @@ def lone_sum(a, b, c):
 print(lone_sum(1, 2, 3))
 print(lone_sum(3, 2, 3))
 print(lone_sum(3, 3, 3))
+
+def lone_sum(a, b, c):
+sum = 0
+lst = [a, b, c]
+for i in lst:
+if lst.count(i) == 1:
+sum += i
+return sum
