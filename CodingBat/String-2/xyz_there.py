@@ -14,8 +14,13 @@ def xyz_there(str):
     if 'xyz' not in str:
         return False
     elif '.xyz' in str:
-        return False
-    elif 'xyz' in str:
+        # remove '.xyz' then find if there's a 'xyz' left
+        str2 = str.replace('.xyz', '')
+        if 'xyz' in str2:
+            return True
+        else:
+            return False
+    else:
         return True
 
 
