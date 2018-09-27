@@ -43,3 +43,7 @@ Sample Input
 Sample Output
 5
 
+if __name__ == '__main__':
+    n = int(input())
+    arr = map(int, input().split())     # input e.g. '1 2 3 4 5'      # map return a map object
+    
