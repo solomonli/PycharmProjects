@@ -76,7 +76,7 @@ if __name__ == '__main__':
     python students = [['Harry', 37.21], ['Berry', 37.21], 
                         ['Tina', 37.2], ['Akriti', 41], ['Harsh', 39]]
     """
-    name = []; score = []
+    name, score = [], []
 
     for _ in range(int(input())):
 
@@ -155,33 +155,27 @@ def minion_game(string):
     :param string: str
     :return: str(space)int
     """
-    def is_vowel(x):
-        """input str (by default in lower case), output boolean"""
-        return x in 'aeiou'
+    vowels = 'AEIOU'
+    stuart = kevin = 0
+    l = len(string)
 
-    string.lower()
-    sl = list(string)
-    # sl_bool = list(map(is_vowel, sl))
+    for i in range(l):
+        if string[i] in vowels:
+            kevin += l - i
+        else:
+            stuart += l - i
 
-    word_list = []
-
-    def collect_words(txt):
-        for i in range(len(txt)):
-            word_list.append(txt[:i + 1])
-        return word_list
-
-    word_bank = []
-
-    for i in range(len(string)):
-        if is_vowel(string[i]):
-            word_bank.append(string[i:])
-
-    sum(map(collect_words, word_bank))
+    if stuart > kevin:
+        print('Stuart ' + str(stuart))
+    elif stuart == kevin:
+        print('Draw')
+    else:
+        print('Kevin ' + str(kevin))
 
 
-s = input()
-print(minion_game(s))
-
+if __name__ == '__main__':
+    s = input()
+    minion_game(s)
 
 if __name__ == '__main__':
     """
@@ -205,8 +199,8 @@ if __name__ == '__main__':
     [1, 5, 9, 10]
     [9, 5, 1]
     """
-    l = []
-    N = int(input())
+    l, N = [], int(input())
+
     for _ in range(N):
         cmd, *nums = input().split()
 
@@ -218,3 +212,61 @@ if __name__ == '__main__':
             eval('l.' + cmd + '(int(nums[0]))')
         else:
             eval('l.' + cmd + '()')
+
+
+def merge_the_tools(string, k):
+    """
+    Sample Input
+    AABCAAADA
+    3
+
+    Sample Output
+    AB
+    CA
+    AD
+
+    :param string: str
+    :param k: 3 lines of output, will be dividable by string length
+    :return: substrings with unique values
+    """
+    # l, n = [], len(string)
+    # hop = int(n / stride)
+    #
+    # for i in range(0, n, stride):
+    #     l.append(string[i:i+stride])
+    #
+    # ll = []
+    #
+    # for item in l:
+    #     ll.append(set(list(item)))
+    #
+    # # lll = []
+    # # for item in ll:
+    # #     lll.append(set(item))
+
+# for i in range(0, len(string), k):
+#     print(''.join(OrderedDict.fromkeys(string[i:i+k])))
+#
+# for i in range(0, len(string), k):
+#     print(''.join(dict({string[i:i+k]:None})))
+
+    import textwrap
+    from collections import OrderedDict
+
+    list1 = textwrap.wrap(string, k)
+    # devides string into n equal parts of size k
+    list2 = []
+
+    for i in list1:
+        # removes duplicate characters from string and append it to list 2
+        list2.append(''.join(OrderedDict.fromkeys(i)))
+        # has to be "OrderedDict.fromkeys", see "d = OrderedDict.fromkeys('abcaa')"
+
+    for i in list2:
+        print(i)
+
+
+if __name__ == '__main__':
+    string, stride = input(), int(input())
+    merge_the_tools(string, k)
+
