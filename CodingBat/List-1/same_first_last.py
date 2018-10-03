@@ -10,7 +10,7 @@ def same_first_last(nums):
     :param nums: list of int
     :return: boolean
     """
-    return len(nums) > 0 and nums[0] == nums[-1]
+    return len(nums) > 0 & nums[0] == nums[-1]
 
 
 print(same_first_last([1, 2, 3]))

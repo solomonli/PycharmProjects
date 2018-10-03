@@ -16,7 +16,7 @@ def end_other(a, b):
     al = a.lower()
     bl = b.lower()
 
-    return bl.endswith(al) or al.endswith(bl)
+    return bl.endswith(al) | al.endswith(bl)
     # return al[-(len(b)):] == bl or al == bl[-(len(a)):]
 
 

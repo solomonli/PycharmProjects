@@ -355,5 +355,35 @@ for i in range(1, n+1):
     print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(i, width=w))
     
 import string 
-print(string.capwords(input(), ' '))    # "solomon 123abc leigh": 'a' won't be capitalized, not like title() does.
+print(string.capwords(input(), ' '))
+# "solomon 123abc leigh": 'a' won't be capitalized, not like title() does.
 
+print(set('HackerRank'))
+# {'r', 'k', 'R', 'e', 'n', 'a', 'c', 'H'}
+
+print(set([1,2,1,2,3,4,5,6,0,9,12,22,3]))
+# {0, 1, 2, 3, 4, 5, 6, 9, 12, 22}
+
+print(set((1,2,3,4,5,5)))
+# {1, 2, 3, 4, 5}
+
+print(set['H','a','c','k','e','r','r','a','n','k']))
+# {'r', 'k', 'e', 'n', 'a', 'c', 'H'}
+
+print(set({'Hacker': 'DOSHI', 'Rank': 616}))
+# {'c', 'r', 'n', 'e', 'k', 'a', 'H'}
+
+print(set(enumerate(['H','a','c','k','e','r','r','a','n','k'])))
+# {(1, 'a'), (7, 'a'), (9, 'k'), (8, 'n'), (6, 'r'), (3, 'k'), (2, 'c'), (0, 'H'), (4, 'e'), (5, 'r')}
+
+my_set = {'a', 'c', 'b'}
+my_set.add((5, 4))
+my_set.update([1, 2, 3, 4])
+my_set.update({1, 7, 8})
+my_set.discard(7); my_set.discard(8)
+
+set1 = set(list(map(int, input().split())))
+set2 = set(list(map(int, input().split())))
+# ss = set1.symmetric_difference(set2)      same thing to '^'
+ss = set1 ^ set2
+print('\n'.join(map(str, sorted(ss))))

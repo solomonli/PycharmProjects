@@ -11,7 +11,7 @@ def first_last6(nums):
     :param nums: list of int
     :return: boolean
     """
-    return nums[0] == 6 or nums[-1] == 6
+    return nums[0] == 6 | nums[-1] == 6
 
 
 print(first_last6([1, 2, 6]))

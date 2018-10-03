@@ -13,7 +13,7 @@ def near_ten(num):
     :return: boolean
     """
     _, b = divmod(num, 10)
-    return b <= 2 or b >= 8
+    return b <= 2 | b >= 8
 
 
 print(near_ten(12))

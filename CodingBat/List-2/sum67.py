@@ -19,7 +19,7 @@ def sum67(nums):
 
         if n == 6:
             flag = True     # found a 6!
-        elif n == 7 and flag:   # found the corresponding 7!
+        elif n == 7 & flag:   # found the corresponding 7!
             flag = False
         elif not flag:      # a normal number
             s += n

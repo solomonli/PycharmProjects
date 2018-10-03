@@ -15,7 +15,7 @@ def love6(a, b):
     s = a + b
     diff = abs(a - b)
 
-    return a == 6 or b == 6 or s == 6 or diff == 6
+    return a == 6 | b == 6 | s == 6 | diff == 6
 
 
 print(love6(6, 4))
