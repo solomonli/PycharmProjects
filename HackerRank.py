@@ -270,3 +270,37 @@ if __name__ == '__main__':
     string, stride = input(), int(input())
     merge_the_tools(string, k)
 
+if __name__ == '__main__':
+    """
+    Sample Input
+    2
+    1 2
+    
+    Sample Output
+    3713081631934410656
+    """
+    n = int(input())
+    integer_list = list(map(int, input().split()))
+    print(hash(tuple(integer_list)))
+
+
+# print("Hello {} {}! You just delved into python.".format(a, b))
+
+def mutate_string(string, position, character):
+    """
+    Sample Input
+    abracadabra
+    5 k
+
+    Sample Output
+    abrackdabra
+    """
+    return string[:position] + character + string[position+1:]
+
+
+if __name__ == '__main__':
+    s = input()
+    i, c = input().split()
+    s_new = mutate_string(s, int(i), c)
+    print(s_new)
+

@@ -48,8 +48,7 @@ class Solution(object):
 
     def islandPerimeter2(self, grid):
         return sum(sum(map(operator.ne, [0] + row, row + [0])) \
-                   for row in grid + map(list, zip(*grid)))
-# In Python 3, map cannot produce lists
+                   for row in grid + list(map(list, zip(*grid))))
 
 
 # if __name__ == "main()":
