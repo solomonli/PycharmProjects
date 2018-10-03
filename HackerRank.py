@@ -304,3 +304,56 @@ if __name__ == '__main__':
     s_new = mutate_string(s, int(i), c)
     print(s_new)
 
+if __name__ == '__main__':
+    s = input()
+    print(any(i for i in s if i.isalnum()))
+    print(any(i for i in s if i.isalpha()))
+    print(any(i for i in s if i.isdigit()))
+    print(any(i for i in s if i.islower()))
+    print(any(i for i in s if i.isupper()))
+ 
+thickness = 5 #This must be an odd number
+c = 'H'
+
+#Top Cone
+for i in range(thickness):
+    print((c*i).rjust(thickness-1)+c+(c*i).ljust(thickness-1))
+
+#Top Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))
+
+#Middle Belt
+for i in range((thickness+1)//2):
+    print((c*thickness*5).center(thickness*6))    
+
+#Bottom Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))    
+
+#Bottom Cone
+for i in range(thickness):
+    print(((c*(thickness-i-1)).rjust(thickness)+c+(c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6))
+
+def wrap(string, max_width):
+    l = ' '.join(textwrap.wrap(string, max_width))
+    string_linebreak = textwrap.fill(l, max_width)
+    return string_linebreak
+
+if __name__ == '__main__':
+    string, max_width = input(), int(input())
+    result = wrap(string, max_width)
+    print(result)
+    
+n, m = map(int, input().split())    # input "9 27"
+pattern = [('.|.' * (2 * i + 1)).center(m, '-') for i in range(n // 2)]
+print('\n'.join(pattern + ['WELCOME'.center(m, '-')] + pattern[::-1]))
+
+n = int(input())
+w = len("{0:b}".format(n))
+for i in range(1, n+1):
+    print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(i, width=w))
+    
+import string 
+print(string.capwords(input(), ' '))    # "solomon 123abc leigh": 'a' won't be capitalized, not like title() does.
+
