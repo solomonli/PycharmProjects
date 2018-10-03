@@ -387,3 +387,34 @@ set2 = set(list(map(int, input().split())))
 # ss = set1.symmetric_difference(set2)      same thing to '^'
 ss = set1 ^ set2
 print('\n'.join(map(str, sorted(ss))))
+
+"""
+Sample Input
+9
+1 2 3 4 5 6 7 8 9
+10
+pop
+remove 9
+discard 9
+discard 8
+remove 7
+pop 
+discard 6
+remove 5
+pop 
+discard 5
+
+Sample Output
+4
+"""
+_ = int(input())
+s = set(map(int, input().split()))
+N = int(input())
+for _ in range(N):
+    cmd, *num = input().split()
+    if cmd == 'pop':
+        eval('s.' + cmd + '()')
+    else:
+        eval('s.' + cmd + '(int(num[0]))')
+print(sum(s))
+
