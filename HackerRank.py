@@ -422,4 +422,15 @@ list(enumerate(['R', 'a', 'n', 'k']))
 
 s1 | s2; s1 & s2; s1 - s2; s1.difference(s2); s1 ^ s2; s1.symmetric_difference(s2)
 
+"""
+.update() or |= 
+.intersection_update() or &=
+.difference_update() or -=
+.symmetric_difference_update() or ^=
+"""
+
+# 1 2 3 6 5 4 4 2 5 3 6 1 6 5 3 2 4 1 2 5 1 4 3 6 8 4 3 1 5 6 2 . Here 8 appears only once.
+l = list(input().split())
+d = {l.count(i) : i  for i in l}
+print(d[1])
 
