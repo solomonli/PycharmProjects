@@ -418,3 +418,8 @@ for _ in range(N):
         eval('s.' + cmd + '(int(num[0]))')
 print(sum(s))
 
+list(enumerate(['R', 'a', 'n', 'k']))
+
+s1 | s2; s1 & s2; s1 - s2; s1.difference(s2); s1 ^ s2; s1.symmetric_difference(s2)
+
+
