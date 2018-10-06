@@ -349,10 +349,13 @@ n, m = map(int, input().split())    # input "9 27"
 pattern = [('.|.' * (2 * i + 1)).center(m, '-') for i in range(n // 2)]
 print('\n'.join(pattern + ['WELCOME'.center(m, '-')] + pattern[::-1]))
 
+
+def fun(N):
+    width = len(bin(N)) - 2
+    for i in range(1, N+1):
+        print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(i,width = width))
 n = int(input())
-w = len("{0:b}".format(n))
-for i in range(1, n+1):
-    print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(i, width=w))
+fun(n)
     
 import string 
 print(string.capwords(input(), ' '))
@@ -360,6 +363,9 @@ print(string.capwords(input(), ' '))
 
 print(set('HackerRank'))
 # {'r', 'k', 'R', 'e', 'n', 'a', 'c', 'H'}
+
+print(set('10'))
+# {'0', '1'}
 
 print(set([1,2,1,2,3,4,5,6,0,9,12,22,3]))
 # {0, 1, 2, 3, 4, 5, 6, 9, 12, 22}
@@ -433,4 +439,80 @@ s1 | s2; s1 & s2; s1 - s2; s1.difference(s2); s1 ^ s2; s1.symmetric_difference(s
 l = list(input().split())
 d = {l.count(i) : i  for i in l}
 print(d[1])
+
+cycle = int(input())
+for _ in range(cycle):
+    setA = set(input().split())
+    setB = set(input().split())
+    print(setA < setB)
+
+super = set(input().split())
+print(all(super > set(input().split()) for _ in range(int(input()))))
+
+"""
+Sample Input
+1+2j
+
+Sample Output
+2.23606797749979 
+1.1071487177940904
+"""
+import cmath
+z = complex(input())    # A polar coordinate (gamma, ps)
+print(abs(z))   # gamma
+print(cmath.phase(z))   # ps
+
+pow(a, b, m)    # calculate x**y mod z
+
+a, b, m = [int(input()) for _ in range(3)]
+print(pow(a, b), pow(a, b, m), sep='\n')
+
+"""
+ord(c) given a string representing one Unicode character, return an integer 
+representing the Unicode code point of that character. For example, ord('a') returns
+ the integer 97 and ord('€') (Euro sign) returns 8364. This is the inverse of chr().
+"""
+
+a, b, c, d = [int(input()) for _ in range(4)]
+print(a**b + c**d)
+
+from itertools import product
+A = [1, 2]
+B = [3, 4]
+print(product(A, B))        # <itertools.product object at 0x10c615558>
+print(*product(A, B))       # (1, 3) (1, 4) (2, 3) (2, 4)
+
+from itertools import *
+# HACK 2
+a, b = input().split()
+print(*(''.join(i) for i in permutations(sorted(a), int(b))), sep='\n')
+print(*(''.join(i) for i in combinations_with_replacement(sorted(a), int(b))), sep='\n')
+
+# HACK 2
+a, b = input().split()
+print(*(''.join(j) for i in range(1, int(b)+1) for j in combinations(sorted(a), i)), sep='\n')
+
+"""
+2 3 4 5 6 8 7 6 5 18
+6
+6 55
+6 45
+6 55
+4 40
+18 60
+10 50
+"""
+from collections import Counter
+
+c = Counter(list(input().split()))
+n = int(input())
+revenue = 0
+
+for i in range(n):
+    size, price = input().split()
+    if c[size]:     # the friendly Counter dict returns 0 given an unknown key
+        c[size] -= 1
+        revenue += int(price)
+
+print(revenue)
 
