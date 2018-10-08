@@ -516,3 +516,27 @@ for i in range(n):
 
 print(revenue)
 
+"""
+Sample Input
+5 2
+a
+a
+b
+a
+b
+a
+b
+
+Sample Output
+1 2 4
+3 5
+"""
+from collections import defaultdict
+d = defaultdict(list)
+n, m = list(map(int, input().split()))
+for i in range(n):
+    d[input()].append(i + 1)        # defaultdict(list, {'a': [1, 2, 4], 'b': [3, 5]})
+for _ in range(m):
+    print(' '.join(map(str, d[input()])) or -1)
+
+from collections import namedtuple
