@@ -539,4 +539,47 @@ for i in range(n):
 for _ in range(m):
     print(' '.join(map(str, d[input()])) or -1)
 
+
+"""
+5
+ID         MARKS      NAME       CLASS     # The order of those columns is random but there must be a "MARKS"
+1          97         Raymond    7         
+2          50         Steven     4         
+3          91         Adrian     9         
+4          72         Stewart    5         
+5          80         Peter      6 
+"""
 from collections import namedtuple
+n = int(input())
+Grade = namedtuple('Grade', input().split())
+marks = [int(Grade._make(input().split()).MARKS) for _ in range(n)]
+print(sum(marks) / len(marks))
+
+
+"""
+Sample Input
+9
+BANANA FRIES 12
+POTATO CHIPS 30
+APPLE JUICE 10
+CANDY 5
+APPLE JUICE 10
+CANDY 5
+CANDY 5
+CANDY 5
+POTATO CHIPS 30
+
+Sample Output
+BANANA FRIES 12
+POTATO CHIPS 60
+APPLE JUICE 20
+CANDY 20
+"""
+from collections import OrderedDict
+d = OrderedDict()
+for _ in range(int(input())):
+    item, space, quantity = input().rpartition(' ')
+    d[item] = d.get(item, 0) + int(quantity)
+for item, quantity in d.items():
+    print(item, quantity)
+
