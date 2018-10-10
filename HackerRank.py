@@ -353,7 +353,7 @@ print('\n'.join(pattern + ['WELCOME'.center(m, '-')] + pattern[::-1]))
 def fun(N):
     width = len(bin(N)) - 2
     for i in range(1, N+1):
-        print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(i,width = width))
+        print("{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}".format(i, width = width))
 n = int(input())
 fun(n)
     
@@ -482,7 +482,7 @@ B = [3, 4]
 print(product(A, B))        # <itertools.product object at 0x10c615558>
 print(*product(A, B))       # (1, 3) (1, 4) (2, 3) (2, 4)
 
-from itertools import *
+from itertools import permutations, combinations, combinations_with_replacement
 # HACK 2
 a, b = input().split()
 print(*(''.join(i) for i in permutations(sorted(a), int(b))), sep='\n')
@@ -515,6 +515,7 @@ for i in range(n):
         revenue += int(price)
 
 print(revenue)
+
 
 """
 Sample Input
@@ -551,7 +552,7 @@ ID         MARKS      NAME       CLASS     # The order of those columns is rando
 """
 from collections import namedtuple
 n = int(input())
-Grade = namedtuple('Grade', input().split())
+Grade = namedtuple('Grade', input().split())    # Grade(MARKS='55', CLASS='8', NAME='Glenn', ID='4')
 marks = [int(Grade._make(input().split()).MARKS) for _ in range(n)]
 print(sum(marks) / len(marks))
 
@@ -582,4 +583,91 @@ for _ in range(int(input())):
     d[item] = d.get(item, 0) + int(quantity)
 for item, quantity in d.items():
     print(item, quantity)
+
+
+"""
+Sample Input
+6
+append 1
+append 2
+append 3
+appendleft 4
+pop
+popleft
+
+Sample Output
+1 2
+"""
+from collections import deque
+# d = deque()
+# for _ in range(int(input())):
+#     cmd, *num = input().split()
+#     if num:
+#         eval('d.'+ cmd + '(int(num[0]))')
+#     else:
+#         eval('d.' + cmd + '()')
+
+# for _ in range(int(input())):
+#     exec('queue.{0}({1})'.format(*input().split()+['']))
+
+for _ in range(int(input())):
+    method, *num = input().split()
+    getattr(d, method)(*num)
+# getattr(x, 'foobar') is equivalent to x.foobar
+# setattr(x, 'foobar', 123) is equivalent to x.foobar = 123
+# delattr(x, 'foobar') is equivalent to del x.foobar
+print(*d)
+
+
+import calendar
+print(calendar.TextCalendar(firstweekday=6).formatyear(2018))
+print(calendar.weekday(2015, 10, 9))
+mm, dd, yy = map(int, input().split())
+print(calendar.day_name[calendar.weekday(yy, mm, dd)].upper())
+
+
+for i in range(int(input())):
+    try:
+        a, b = map(int,input().split())
+        print(a // b)
+    except Exception as e:
+        print("Error Code:", e)
+
+
+import re
+for _ in range(int(input())):
+    ans = True
+    try:
+        reg = re.compile(input())
+    except re.error:
+        ans = False
+    print(ans)
+
+"""
+has to pass float() but cannot be '12.'
+"""
+for _ in range(int(input())):
+    ans = False
+    try:
+        s = input()
+        num = float(s)
+        ans = True
+        num = int(s)
+        ans = False
+    except:
+        pass
+    print(ans)
+
+
+for _ in range(int(input())):
+    s = input()
+    try:
+        int(s)
+        print(False)
+    except:
+        try:
+            float(s)
+            print(True)
+        except:
+            print(False)
 
