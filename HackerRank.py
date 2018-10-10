@@ -648,8 +648,8 @@ has to pass float() but cannot be '12.'
 """
 for _ in range(int(input())):
     ans = False
+    s = input()
     try:
-        s = input()
         num = float(s)
         ans = True
         num = int(s)
@@ -659,15 +659,96 @@ for _ in range(int(input())):
     print(ans)
 
 
-for _ in range(int(input())):
-    s = input()
-    try:
-        int(s)
-        print(False)
-    except:
-        try:
-            float(s)
-            print(True)
-        except:
-            print(False)
+"""
+5 3     # subject as the row, student as the column
+89 90 78 93 80
+90 91 85 88 86  
+91 92 83 89 90.5
+"""
+_, subject = map(int, input().split())
+score = []
+for _ in range(subject):
+    score.append(map(float, input().split()))
+for i in zip(*score):
+    print(sum(i) / subject)
+
+
+"""
+Sample Input
+1 4
+x**3 + x**2 + x + 1
+
+Sample Output
+True
+"""
+x, ans = map(int, input().split())
+print(eval(input()) == ans)
+
+
+"""
+input
+5 3
+10 2 5
+7 1 0
+9 9 9
+1 23 12
+6 5 9
+1   # sorted by the 2nd column (zero-based index)
+
+output
+7 1 0
+10 2 5
+6 5 9
+9 9 9
+1 23 12
+"""
+n, m = map(int, input().split())
+rows = [input() for _ in range(n)]
+# rows = list(input() for _ in range(n))
+k = int(input())
+
+print(*sorted(rows, key=lambda row: int(row.split()[k])), sep='\n')
+
+
+"""
+Sample Input
+5
+12 9 61 5 14
+
+Sample Output
+True
+
+Explanation
+Condition 1: All the integers in the list are positive.
+Condition 2: Any of the integers is a palindromic integer.
+"""
+
+n, l = input(), list(input().split())
+print(all(int(i) > 0 for i in l) and any(i == i[::-1] for i in l))
+
+
+"""
+A list on a single line containing the cubes of the first fibonacci numbers.
+
+Sample Input
+5
+
+Sample Output
+[0, 1, 1, 8, 27]
+"""
+n = int(input())
+
+def fib(x):
+    if x < 2:
+        return x
+    else:
+        return fib(x-1) + fib(x-2)
+
+cube = lambda x: x ** 3
+
+print(list(map(cube, map(fib, list(range(1, n+1))))))
+
+# fib = lambda y: y if y < 2 else fib(y - 1) + fib(y - 2)
+# print(list(map(lambda x: x**3, map(fib, range(int(input()))))))
+
 
