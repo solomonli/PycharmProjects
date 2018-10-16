@@ -5,20 +5,19 @@ def is_leap(year):
     :param year: int
     :return: boolean
     """
-    if year % 4 != 0:
-        leap = False
+    # if year % 4 != 0:
+    #     leap = False
+    # elif year % 100 != 0:
+    #     leap = True
+    # elif year % 400 != 0:
+    #     leap = False
+    # else:
+    #     leap = True
+    # return leap
 
-    elif year % 100 != 0:
-        leap = True
+    # return year % 4 == 0 & (year % 400 == 0 | year % 100 != 0)
 
-    elif year % 400 != 0:
-        leap = False
-
-    else:
-        leap = True
-    
-    return leap
-
+    return year % 4 == 0 & year % 100 != 0 | year % 400 == 0
 
 if __name__ == '__main__':
     """
@@ -213,6 +212,14 @@ if __name__ == '__main__':
         else:
             eval('l.' + cmd + '()')
 
+        if cmd == 'print':  # which means hasattr(l, cmd) returns an error
+            print(l)
+        else(1):
+            cmd += '(' + ','.join(nums) + ')'
+            eval('l.' + cmd)
+        else(2):
+            getattr(l, cmd)(*map(int, nums))
+
 
 def merge_the_tools(string, k):
     """
@@ -270,6 +277,7 @@ if __name__ == '__main__':
     string, stride = input(), int(input())
     merge_the_tools(string, k)
 
+
 if __name__ == '__main__':
     """
     Sample Input
@@ -282,9 +290,13 @@ if __name__ == '__main__':
     n = int(input())
     integer_list = list(map(int, input().split()))
     print(hash(tuple(integer_list)))
+    # Return the hash value of the object (if it has one). Hash values are integers.
+    # They are used to quickly compare dictionary keys during a dictionary lookup.
+    # Numeric values that compare equal have the same hash value
+    # (even if they are of different types, as is the case for 1 and 1.0).
 
 
-# print("Hello {} {}! You just delved into python.".format(a, b))
+print("Hello {1}, {0}! You just delved into python.".format(input(), input()))
 
 def mutate_string(string, position, character):
     """
@@ -303,7 +315,20 @@ if __name__ == '__main__':
     i, c = input().split()
     s_new = mutate_string(s, int(i), c)
     print(s_new)
+    # getattr() won't work on this problem since string cannot be directly mutated
 
+
+"""
+Sample Input
+qA2
+
+Sample Output
+True
+True
+True
+True
+True
+"""
 if __name__ == '__main__':
     s = input()
     print(any(i for i in s if i.isalnum()))
@@ -311,10 +336,17 @@ if __name__ == '__main__':
     print(any(i for i in s if i.isdigit()))
     print(any(i for i in s if i.islower()))
     print(any(i for i in s if i.isupper()))
- 
-thickness = 5 #This must be an odd number
-c = 'H'
 
+for method in ['isalnum', 'isalpha', 'isdigit', 'islower', 'isupper']:
+    print(any(getattr(letter, method)() for letter in s))
+
+for method in ['isalnum', 'isalpha', 'isdigit', 'islower', 'isupper']:
+    print(any(map(getattr(str, method), s)))    # this is quite cool!
+
+"""
+thickness = 5       #This must be an odd number
+c = 'H'
+"""
 #Top Cone
 for i in range(thickness):
     print((c*i).rjust(thickness-1)+c+(c*i).ljust(thickness-1))
@@ -335,6 +367,21 @@ for i in range(thickness+1):
 for i in range(thickness):
     print(((c*(thickness-i-1)).rjust(thickness)+c+(c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6))
 
+"""
+Sample Input
+ABCDEFGHIJKLIMNOQRSTUVWXYZ
+4
+
+Sample Output
+ABCD
+EFGH
+IJKL
+IMNO
+QRST
+UVWX
+YZ
+"""
+
 def wrap(string, max_width):
     l = ' '.join(textwrap.wrap(string, max_width))
     string_linebreak = textwrap.fill(l, max_width)
@@ -344,6 +391,10 @@ if __name__ == '__main__':
     string, max_width = input(), int(input())
     result = wrap(string, max_width)
     print(result)
+
+# or just as:
+print(textwrap.fill(input(), int(input())))
+
     
 n, m = map(int, input().split())    # input "9 27"
 pattern = [('.|.' * (2 * i + 1)).center(m, '-') for i in range(n // 2)]
@@ -614,6 +665,8 @@ for _ in range(int(input())):
     method, *num = input().split()
     getattr(d, method)(*num)
 # getattr(x, 'foobar') is equivalent to x.foobar
+# hasattr(object, name). This is implemented by calling getattr(object, name) and seeing
+# whether it raises an AttributeError or not.
 # setattr(x, 'foobar', 123) is equivalent to x.foobar = 123
 # delattr(x, 'foobar') is equivalent to del x.foobar
 print(*d)
@@ -626,7 +679,7 @@ mm, dd, yy = map(int, input().split())
 print(calendar.day_name[calendar.weekday(yy, mm, dd)].upper())
 
 
-for i in range(int(input())):
+for _ in range(int(input())):
     try:
         a, b = map(int,input().split())
         print(a // b)
@@ -751,4 +804,88 @@ print(list(map(cube, map(fib, list(range(1, n+1))))))
 # fib = lambda y: y if y < 2 else fib(y - 1) + fib(y - 2)
 # print(list(map(lambda x: x**3, map(fib, range(int(input()))))))
 
+
+import numpy as np
+
+print(np.array([1,2,3,4,5]))
+print(np.array([1,2,3,4,5],float))
+
+out = np.array(input().split(), int)
+print(out.reshape(3, 3))
+
+"""
+Sample Input
+2 2
+1 2
+3 4
+
+Sample Output
+[[1 3]
+ [2 4]]
+[1 2 3 4]
+"""
+n, _ = map(int, input().split())
+array = np.array([input().split() for _ in range(n)], int)
+print(array.T)
+print(array.flatten())
+
+aa = np.array([1,2,3])
+bb = np.array([2,3,4])
+aabb = np.concatenate((aa, bb), axis=0)     # vertically
+aabb = np.concatenate((aa, bb), axis=1)     # horizontally
+
+x, y, *z = list(map(int, input().split()))
+print(np.zeros((x, y, *z), dtype = np.int))
+print(np.ones((x, y, *z), dtype = np.int))
+
+dim = tuple(map(int, input().split()))  # dim can be any natural number
+print(np.zeros(dim, dtype = np.int))
+print(np.ones(dim, dtype = np.int))
+
+print(*map(lambda x: x**2, range(n)), sep='\n')
+
+print(input().replace(' ', '_'))
+print('_'.join(input().split()))
+print(*input().split(), sep='-')    # all equivalent
+
+
+"""
+ABCDCDC
+CDC
+"""
+import re
+
+def count_substring(string, sub_string):
+    return len(re.findall('(?=' + sub_string + ')', string))
+
+def count_substring(string, sub_string):
+    return sum([1 for _ in range(0, len(string) - len(sub_string) + 1)
+                if (string[i:(len(sub_string)+i)] == sub_string)])
+
+def count_substring(string, sub):
+    return [string[i:i+len(sub)] for i in range(len(string))].count(sub)
+
+list.count(item)            # return the number of occurrences of the item
+string.count(sub_string)    # return the number of over-lapping occurrences of substring
+
+# since Python is open-sourced, all the source codes are available in its Github
+
+m, n = map(int, input().split())
+np.set_printoptions(sign=' ')       # not sure about its existence
+print(np.eye(m, n))
+print(np.identity(n))
+
+"""
+Sample Input
+1 4         two arrays a and b with the shape of n*m
+1 2 3 4
+5 6 7 8
+"""
+n, m = map(int, input().split())
+
+a = np.array([input().split() for _ in range(n)], int)
+b = np.array([input().split() for _ in range(n)], int)
+
+for i in ['+', '-', '*', '//', '%', '**']:      # or use a tuple
+    print(eval('a' + i + 'b'))
 
