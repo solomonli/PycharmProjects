@@ -883,9 +883,14 @@ Sample Input
 """
 n, m = map(int, input().split())
 
-a = np.array([input().split() for _ in range(n)], int)
+a = np.array([input().split() for _ in range(n)], int)      # impressive
 b = np.array([input().split() for _ in range(n)], int)
 
 for i in ['+', '-', '*', '//', '%', '**']:      # or use a tuple
     print(eval('a' + i + 'b'))
 
+np.set_printoptions(sign=' ')
+c = np.array(input().split(), float)
+print(np.floor(c))
+print(np.ceil(c))
+print(np.rint(c))
