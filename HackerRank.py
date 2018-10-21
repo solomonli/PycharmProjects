@@ -894,3 +894,98 @@ c = np.array(input().split(), float)
 print(np.floor(c))
 print(np.ceil(c))
 print(np.rint(c))
+print(np.sum(a, axis=0)); print(np.prod(b, axis=1)); # also max() and min() with axes
+
+# np.set_printoptions(legacy='1.13')
+np.var(); np.mean(); np.std()
+
+f = np.array([input().split() for _ in range(n)], float)
+
+np.set_printoptions(legacy='1.13')
+
+print(np.mean(f, axis=1))
+print(np.var(f, axis=0))
+print(np.std(f, axis=None))
+
+print(np.dot(a, b))     np.matmul()
+np.outer(); np.inner()
+
+"""
+The poly tool returns the coefficients of a polynomial with the given sequence of roots.
+The roots tool returns the roots of a polynomial with the given coefficients.
+The polyint tool returns an antiderivative (indefinite integral) of a polynomial.
+The polyder tool returns the derivative of the specified order of a polynomial.
+The polyval tool evaluates the polynomial at specific value.
+The polyfit tool fits a polynomial of a specified order to a set of data using a least-squares approach.
+The functions polyadd, polysub, polymul, and polydiv also handle proper 
+addition, subtraction, multiplication, and division of polynomial coefficients, respectively.
+"""
+"""
+Sample Input
+1.1 2 3
+0
+
+Sample Output
+3.0
+"""
+print(np.polyval(list(map(float, input().split())), int(input())))
+
+"""
+The linalg.det tool computes the determinant of an array.
+The linalg.eig computes the eigenvalues and right eigenvectors of a square array.
+The linalg.inv tool computes the (multiplicative) inverse of a matrix.
+
+You are given a square matrix  with dimensions X. Your task is to find the determinant.
+
+Sample Input
+2
+1.1 1.1
+1.1 1.1
+
+Sample Output
+0.0
+"""
+n = int(input())
+a = np.array([input().split() for _ in range(n)], float)
+np.set_printoptions(legacy='1.13')      # rounded to 2 decimal points
+print(np.linalg.det(a))
+
+
+
+"""
+1 5 3 3
+3 1
+5 7
+"""
+base = list(input().split())     # don't remove duplicate values
+a = set(input().split())    # good set
+b = set(input().split())    # bad set
+
+print(sum((i in a) - (i in b) for i in base))
+
+
+import math
+AB = float(input())
+BC = float(input())
+
+print(str(int(round(math.degrees(math.atan2(AB, BC))))) + '°')
+# atan takes one argument, atan2 takes two
+"""
+30°     π/6
+45°     π/4
+60°     π/3
+90°     π/2
+180°    π
+270°	3π/2
+360°	2π
+"""
+for i in range(1, int(input()) + 1):
+    print(int('1' * i) ** 2)
+for i in range(1, int(input())):
+    print(str(i) * i)
+
+from itertools import groupby
+for i, j in groupby(input()):
+    print((len(list(j)), int(i)), end=' ')
+print(*[(len(list(j)), int(i)) for i, j in groupby(input())])
+
