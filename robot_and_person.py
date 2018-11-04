@@ -27,5 +27,6 @@ p2 = Person("Becky", "aggressive", True)
 p1.robot_owned = r2
 p2.robot_owned = r1
 
+r1.introduce_self()
 
 p1.robot_owned.introduce_self()

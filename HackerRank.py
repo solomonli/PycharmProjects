@@ -989,3 +989,122 @@ for i, j in groupby(input()):
     print((len(list(j)), int(i)), end=' ')
 print(*[(len(list(j)), int(i)) for i, j in groupby(input())])
 
+
+"""
+a b a c a s
+3
+"""
+string, length = input(), input().split(), int(input())
+found = ['a' in i for i in combinations(string, length)]
+print(sum(found) / len(found))
+
+
+"""
+4
+bcdef
+abcdefg
+bcde
+bcdef
+"""
+from collections import OrderedDict
+
+d = OrderedDict()
+
+for i in range(int(input())):
+    key = input()
+    d[key] = d.get(key, 0) + 1
+
+print(len(d.keys()))
+print(*d.values())
+
+
+o = OrderedDict()
+for key in list(input()):
+    o[key] = o.get(key, 0) + 1
+so = sorted(o.items(), key=lambda x: (-x[1],x[0]))      # impressive
+for a, b in so[:3]:
+    print(a, b)
+
+
+"""
+Sample Input
+2   # two groups of data
+6
+4 3 2 1 3 4     # small numbers are wrapped by big ones
+3
+1 3 2   # fails to do so
+
+Sample Output
+
+Yes
+No
+"""
+for _ in range(int(input())):
+    input()
+    l = list(map(int, input().split()))
+    if max(l) in (l[0], l[-1]):
+        print('Yes')
+    else:
+        print('No')
+
+
+theList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1357902468"
+print(*sorted(input(), key=theList.index), sep="")
+
+str = 'purple alice@google.com, blah monkey bob@abc.com blah dishwasher'
+emails = re.findall(r'[\w\.-]+@[\w\.-]+', str)
+
+"""
+Valid email addresses must follow these rules:
+It must have the username@websitename.extension format type.
+The username can only contain letters, digits, dashes and underscores.
+The website name can only have letters and digits.
+The maximum length of the extension is.
+
+Sample Input
+3
+lara@hackerrank.com
+brian-23@hackerrank.com
+britts_54@hackerrank.com
+
+Sample Output
+['brian-23@hackerrank.com', 'britts_54@hackerrank.com', 'lara@hackerrank.com']
+"""
+
+
+def fun(s):
+    """return True if s is a valid email, else return False"""
+    try:
+        username, url = s.split('@')
+        websites, extension = url.split('.')
+    except ValueError:
+        return False
+
+    return username.replace('_', '').replace('-', '').isalnum() & websites.isalpha() & 0 < len(extension) <= 3
+
+def filter_mail(emails):
+    return list(filter(fun, emails))
+
+if __name__ == '__main__':
+    n = int(input())
+    emails = []
+    for _ in range(n):
+        emails.append(input())
+
+filtered_emails = filter_mail(emails)
+filtered_emails.sort()
+print(filtered_emails)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
