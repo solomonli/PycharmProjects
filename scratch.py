@@ -8,7 +8,7 @@ def fun(s):
 
     return username.replace('_', '').replace('-', '').isalnum() \
            & websites.isalpha() \
-           & 0 < len(extension) <= 3
+           & (0 < len(extension) <= 3)      # the () are very necessary here
 
 
 def filter_mail(emails):
