@@ -1070,8 +1070,6 @@ britts_54@hackerrank.com
 Sample Output
 ['brian-23@hackerrank.com', 'britts_54@hackerrank.com', 'lara@hackerrank.com']
 """
-
-
 def fun(s):
     """return True if s is a valid email, else return False"""
     try:
@@ -1080,7 +1078,9 @@ def fun(s):
     except ValueError:
         return False
 
-    return username.replace('_', '').replace('-', '').isalnum() & websites.isalpha() & 0 < len(extension) <= 3
+    return username.replace('_', '').replace('-', '').isalnum() \
+           & websites.isalnum() \
+           & (0 < len(extension) <= 3)  # () is important here
 
 def filter_mail(emails):
     return list(filter(fun, emails))
@@ -1096,8 +1096,95 @@ filtered_emails.sort()
 print(filtered_emails)
 
 
+# functools.reduce(function, iterable[, initializer])
+
+from fractions import Fraction
+from functools import reduce
+
+def product(fracs):
+    t = reduce(lambda x, y : x * y, fracs)      # that's how you use Reduce
+    return t.numerator, t.denominator
+
+if __name__ == '__main__':
+    fracs = []
+    for _ in range(int(input())):
+        fracs.append(Fraction(*map(int, input().split())))
+    # Fraction(1, 2) == 0.5   True
+    result = product(fracs)
+    print(*result)
+
+"""
+3
+07895462130
+919875641230
+9195969878
+
+output
++91 78954 62130
++91 91959 69878
++91 98756 41230
+"""
 
 
+def wrapper(f):
+    def inner(l):
+        # complete the function
+        f(map(lambda x: '+91 ' + x[-10:-5] + ' ' + x[-5:], l))
+
+    return inner
+
+
+@wrapper
+def sort_phone(l):
+    print(*sorted(l), sep='\n')
+
+
+l = [input() for _ in range(int(input()))]
+sort_phone(l)
+
+"""
+Sample Input
+10
+Jake Jake 42 M
+Jake Kevin 57 M
+Jake Michael 91 M
+Kevin Jake 2 M
+Kevin Kevin 44 M
+Kevin Michael 100 M
+Michael Jake 4 M
+Michael Kevin 36 M
+Michael Michael 15 M
+Micheal Micheal 6 M
+
+Sample Output
+Mr. Kevin Jake
+Mr. Michael Jake
+Mr. Micheal Micheal
+Mr. Michael Michael
+Mr. Michael Kevin
+Mr. Jake Jake
+Mr. Kevin Kevin
+Mr. Jake Kevin
+Mr. Jake Michael
+Mr. Kevin Michael
+"""
+
+
+def person_lister(f):
+    def inner(people):
+        return map(f, sorted(people, key=lambda x: int(x[2])))
+
+    return inner
+
+
+@person_lister
+def name_format(person):
+    return ("Mr. " if person[3] == "M" else "Ms. ") + person[0] + " " + person[1]
+
+
+if __name__ == '__main__':
+    people = [input().split() for i in range(int(input()))]
+    print(*name_format(people), sep='\n')
 
 
 
