@@ -4,20 +4,22 @@ class Animal:
         self.color = color
 
 
-class Cat(Animal):
+class Cat(Animal):  # inherit from the superclass Animal
     def purr(self):
         print("Purr...")
+
 
 felix = Cat("ginger", 4)
 rover = Cat("dog-colored", 4)
 stumpy = Cat("brown", 3)
 
 
-class Dog(Animal):  # inherit from a superclass Animal
+class Dog(Animal):  # inherit from the superclass Animal
     legs = 4
 
     def bark(self):
         print("Woof!")  # here return won't yield the desired result
+
 
 fido = Dog("Fido", "brown")
 
@@ -29,20 +31,16 @@ class Student:
     def sayHi(self):
         print("Hi from " + self.name)
 
+
 s1 = Student("Amy")
 
-
-def main():
+if __name__ == "__main__":
     print(felix.color)
     print(fido.name)
     fido.bark()
-    print(fido.legs)    # from a instance of class
-    print(Dog.legs)    # from class itself
+    print(fido.legs)  # from a instance of class
+    print(Dog.legs)  # from class itself
     s1.sayHi()
-
-
-if __name__ == "__main__":
-    main()
 
 
 class A:
@@ -53,6 +51,7 @@ class A:
 class B(A):
     def method(self):
         print(2)
+
 
 B().method()    # If a class inherits from another with the same attributes or methods, it overrides them.
 
@@ -121,6 +120,7 @@ class Vector2D:
         return Vector2D(self.x + other.x, self.y + other.y)
         # Once it's defined, we can add two objects of the class together.
 
+
 first = Vector2D(5, 7)
 second = Vector2D(3, 9)
 result = first + second
@@ -140,8 +140,7 @@ __xor__ for ^
 __or__ for |
 
 The expression x + y is translated into x.__add__(y). 
-However, if x hasn't implemented __add__, and x and y are of different types, 
-then y.__radd__(x) is called. 
+However, if x hasn't implemented __add__, and x and y are of different types, then y.__radd__(x) is called. 
 """
 
 
@@ -152,6 +151,7 @@ class SpecialString:
     def __truediv__(self, other):
         line = "=" * len(other.cont)
         return "\n".join([self.cont, line, other.cont])
+
 
 spam = SpecialString("spam")
 hello = SpecialString("Hello world!")
@@ -180,6 +180,7 @@ class SpecialString2:
             result = other.cont[:index] + ">" + self.cont
             result += ">" + other.cont[index:]
             print(result)
+
 
 spam = SpecialString2("spam")
 eggs = SpecialString2("eggs")
@@ -212,6 +213,7 @@ class VagueList:
 
     def __len__(self):
         return random.randint(0, len(self.cont)*2)
+
 
 vague_list = VagueList(["A", "B", "C", "D", "E"])
 print(len(vague_list))
@@ -283,6 +285,7 @@ class Spam:
     def print_egg(self):
         print(self.__egg)
 
+
 s = Spam()
 s.print_egg()
 print(s._Spam__egg)  # How would the attribute __a of the class b be accessed from outside the class?
@@ -315,6 +318,8 @@ class Rectangle:
         return cls(side_length, side_length)
 # Technically, the parameters self and cls are just conventions; they could be changed to anything else.
 # However, they are universally followed, so it is wise to stick to using them.
+
+
 square = Rectangle.new_square(5)
 print(square.calculate_area())
 
@@ -401,9 +406,12 @@ class Pizza:
         else:
             raise ValueError("Alert! Intruder!")
 
+
 pizza = Pizza(["cheese", "tomato"])
 print(pizza.pineapple_allowed)
 pizza.pineapple_allowed = True
 print(pizza.pineapple_allowed)
-
-################ to be continued with Regular Expression part
+"""
+https://www.sololearn.com/Course/Python/
+to be continued with Regular Expression part
+"""

@@ -1109,7 +1109,7 @@ if __name__ == '__main__':
     fracs = []
     for _ in range(int(input())):
         fracs.append(Fraction(*map(int, input().split())))
-    # Fraction(1, 2) == 0.5   True
+    assert Fraction(1, 2) == 0.5
     result = product(fracs)
     print(*result)
 
@@ -1124,8 +1124,6 @@ output
 +91 91959 69878
 +91 98756 41230
 """
-
-
 def wrapper(f):
     def inner(l):
         # complete the function
@@ -1168,8 +1166,6 @@ Mr. Jake Kevin
 Mr. Jake Michael
 Mr. Kevin Michael
 """
-
-
 def person_lister(f):
     def inner(people):
         return map(f, sorted(people, key=lambda x: int(x[2])))
@@ -1187,11 +1183,84 @@ if __name__ == '__main__':
     print(*name_format(people), sep='\n')
 
 
+def works_for_all(func):
+    def inner(*args, **kwargs):
+        print("I can decorate any function")
+        return func(*args, **kwargs)
+    return inner
+"""
+In Python, this magic is done as function(*args, **kwargs). In this way, 
+args will be the tuple of positional arguments and kwargs will be the dictionary of keyword arguments. 
+An example of such decorator will be.
 
+@make_pretty
+def ordinary():
+    print("I am ordinary")
 
+is equivalent to
 
+def ordinary():
+    print("I am ordinary")
+ordinary = make_pretty(ordinary)
 
+This is just a syntactic sugar to implement decorators.
+"""
 
+"""
+>>> L = [('Italy', 'Rome'), ('France', 'Paris'), ('US', 'Washington DC')]
+>>> dict(iter(L))
+{'Italy': 'Rome', 'France': 'Paris', 'US': 'Washington DC'}
+"""
 
+"""
+# Python 3: Fibonacci series up to n
+>>> def fib(n):
+>>>     a, b = 0, 1
+>>>     while a < n:
+>>>         print(a, end=' ')
+>>>         a, b = b, a+b
+>>>     print()
+>>> fib(1000)
+"""
 
+"""
+from functools import reduce
+num = [2, 4, 6, 8]
+from operator import mul
+reduce(mul, num)
+Out: 384
+"""
+"""
+2
+Sun 10 May 2015 13:54:36 -0700
+Sun 10 May 2015 13:54:36 -0000
+Sat 02 May 2015 19:54:36 +0530
+Fri 01 May 2015 13:54:36 -0000
+"""
+from datetime import datetime as dt
+
+fmt = '%a %d %b %Y %H:%M:%S %z'
+for _ in range(int(input())):
+    print(int(abs((dt.strptime(input(), fmt) - dt.strptime(input(), fmt)).total_seconds())))
+# https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+"""
+timedelta.total_seconds()
+Return the total number of seconds contained in the duration. Equivalent to td / timedelta(seconds=1).
+"""
+
+def is_vowel(letter):
+    return letter in ['a', 'e', 'i', 'o', 'u', 'y']
+
+def score_words(words):
+    score = 0
+
+    for word in words:
+        num_vowels = sum(map(is_vowel, list(word)))
+        # = sum(map(word.count, "aeiouy"))
+        if num_vowels % 2 == 0:
+            score += 2
+        else:
+            score += 1
+
+    return score
 
