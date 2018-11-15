@@ -9,10 +9,12 @@ from itertools import product
 
 k, m = map(int, input().split())
 l = []
+
 for i in range(k):
     _, *tail = list(map(int, input().split()))
+#     tail = list(map(int, input().split()))[1:]
     l.append(tail)
 
-results = map(lambda x: sum(i**2 for i in x) % m, product(*l))
+results = map(lambda x: sum(element ** 2 for element in x) % m, product(*l))
 
 print(max(results))
