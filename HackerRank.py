@@ -15,9 +15,9 @@ def is_leap(year):
     #     leap = True
     # return leap
 
-    # return year % 4 == 0 & (year % 400 == 0 | year % 100 != 0)
+    return year % 4 == 0 and (year % 400 == 0 or year % 100 != 0)
 
-    return year % 4 == 0 & year % 100 != 0 | year % 400 == 0
+    # return year % 4 == 0 & year % 100 != 0 | year % 400 == 0
 
 if __name__ == '__main__':
     """
@@ -1079,8 +1079,9 @@ def fun(s):
         return False
 
     return username.replace('_', '').replace('-', '').isalnum() \
-           & websites.isalnum() \
-           & (0 < len(extension) <= 3)  # () is important here
+           and websites.isalnum() \
+           and (0 < len(extension) <= 3)  # () is important here
+            # what if you use 'and' instead of &: safer but cannot verify now
 
 def filter_mail(emails):
     return list(filter(fun, emails))
@@ -1264,3 +1265,48 @@ def score_words(words):
 
     return score
 
+"""
+3 1000
+2 5 4
+3 7 8 9
+5 5 7 8 9 10
+"""
+from itertools import product
+
+k, m = map(int, input().split())
+l = []
+
+for _ in range(k):
+    _, *tail = list(map(int, input().split()))
+#     tail = list(map(int, input().split()))[1:]
+    l.append(tail)
+#     this will yield [[5, 4], [7, 8, 9], [5, 7, 8, 9, 10]]
+
+results = map(lambda x: sum(element ** 2 for element in x) % m, product(*l))
+
+print(max(results))
+
+"""
+Write a program that prints the temperature closest to 0 among input data.
+If two numbers are equally close to zero, positive integer has to be considered 
+closest to zero (for instance, if the temperatures are -5 and 5, then display 5).
+5
+1 -2 -8 4 5
+6
+42 -5 12 21 5 24
+"""
+n = int(input())
+
+if n == 0:
+    print(0)
+
+else:
+    m = sorted(list(map(int, input().split())))
+
+    temp = m[0]
+
+    for i in range(n - 1):
+        if abs(m[i + 1]) < abs(m[i]) or abs(temp) == abs(m[i + 1]) and m[i + 1] > 0:
+            temp = m[i + 1]
+
+    print(temp)
