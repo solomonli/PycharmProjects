@@ -1295,21 +1295,25 @@ closest to zero (for instance, if the temperatures are -5 and 5, then display 5)
 6
 42 -5 12 21 5 24
 """
-n = int(input())
+# import sys
 
-if n == 0:
-    print(0)
+_ = input()
 
-else:
-    m = sorted(list(map(int, input().split())))
+m = list(map(int, (input() or '0').split()))
 
-    temp = m[0]
+m.sort(key=lambda x: (abs(x), -x))
+# sort by ascending abs(x), then by descending x
 
-    for i in range(n - 1):
-        if abs(m[i + 1]) < abs(m[i]) or abs(temp) == abs(m[i + 1]) and m[i + 1] > 0:
-            temp = m[i + 1]
+# print(m, file=sys.stderr)
+"""
+File objects used by the interpreter for standard input, output and errors:
 
-    print(temp)
+stdin is used for all interactive input (including calls to input());
+stdout is used for the output of print() and expression statements and 
+for the prompts of input();
+The interpreter’s own prompts and its error messages go to stderr.
+"""
+print(m[0])
 
 import pandas as pd
 import numpy as np
