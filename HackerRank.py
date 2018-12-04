@@ -1295,25 +1295,3 @@ closest to zero (for instance, if the temperatures are -5 and 5, then display 5)
 6
 42 -5 12 21 5 24
 """
-n = int(input())
-
-if n == 0:
-    print(0)
-
-else:
-    m = sorted(list(map(int, input().split())))
-
-    temp = m[0]
-
-    for i in range(n - 1):
-        if abs(m[i + 1]) < abs(m[i]) or abs(temp) == abs(m[i + 1]) and m[i + 1] > 0:
-            temp = m[i + 1]
-
-    print(temp)
-
-import pandas as pd
-import numpy as np
-d = {'Sales':[100, 200], 'Date':['Nov', 'Nov']}
-df = pd.DataFrame(data=d)
-df
-df.groupby(by=['Date']).sum()
