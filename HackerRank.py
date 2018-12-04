@@ -1310,3 +1310,10 @@ else:
             temp = m[i + 1]
 
     print(temp)
+
+import pandas as pd
+import numpy as np
+d = {'Sales':[100, 200], 'Date':['Nov', 'Nov']}
+df = pd.DataFrame(data=d)
+df
+df.groupby(by=['Date']).sum()
