@@ -1321,3 +1321,25 @@ d = {'Sales':[100, 200], 'Date':['Nov', 'Nov']}
 df = pd.DataFrame(data=d)
 df
 df.groupby(by=['Date']).sum()
+
+def word_distribution(s, word_list=None):
+    """
+    word_distribution("Hello. How are you? Please say hello if you don’t love me!")
+    should return {‘hello’: 2, ‘how’:1, ‘are’:1, ‘you’:2, ’please’:1, “don’t”: 1, 'say':1, 'if':1, 'love':1,'me':1}
+
+    word_distribution("That's when I saw Jane (John's sister)!")
+    should return {"that's":1, "when":1,"i":1,"saw":1,"jane":1, "(john's":1, "sister)":1}
+    """
+    import string
+    exclude = set(string.punctuation)
+        # all the punctuation characters
+
+    raw_word_list = [x.lower() for x in list(s.split())]
+        # list comprehension
+
+    word_list = [x[:-1] if x[-1] in exclude else x for x in raw_word_list]
+        # list comprehension with if and else
+        # NOTE: word_list = [x[:-1]  for x in raw_word_list if x[-1] in exclude] the IF works as an overarching filter
+
+    return {x: word_list.count(x) for x in word_list}
+
