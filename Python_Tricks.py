@@ -184,3 +184,19 @@ print(greet(), greet.__name__, greet.__doc__, sep='\n')
 
 # yeah!~~
 
+def foo(required, *args, **kwargs):
+    print(required)
+
+    if args:
+        print(args)
+
+    if kwargs:
+        print(kwargs)
+
+
+foo('Hey!', 2, 2, key1='a', key2='b')
+
+# hey
+# (2, 2)
+# {'key1': 'a', 'key2': 'b'}
+
