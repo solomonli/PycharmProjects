@@ -136,7 +136,51 @@ def trace(func):
 
 @trace
 def say(name, line):
-    return f'{name}, {line}!'
+    return f'{name}: {line}!'
 
 
 print(say('Jane', 'Come'))
+
+############################################
+def uppercase(func):
+    def wrapper():
+        return func().upper()
+    return wrapper
+
+
+@uppercase
+def greet():
+    '''
+    input nothing
+    :return: the pre-set string
+    '''
+    return 'Hi, there!'
+
+
+print(greet(), greet.__name__, greet.__doc__, sep='\n')
+
+# see the problem of the decrator UPPERCASE?
+############################################
+import functools
+
+
+def uppercase(func):
+    @functools.wraps(func)      # a cool line!
+    def wrapper():
+        return func().upper()
+    return wrapper
+
+
+@uppercase
+def greet():
+    """
+    input nothing
+    :return: the pre-set string
+    """
+    return 'Hi, there!'
+
+
+print(greet(), greet.__name__, greet.__doc__, sep='\n')
+
+# yeah!~~
+
