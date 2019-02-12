@@ -184,6 +184,7 @@ print(greet(), greet.__name__, greet.__doc__, sep='\n')
 
 # yeah!~~
 
+
 def foo(required, *args, **kwargs):
     print(required)
 
