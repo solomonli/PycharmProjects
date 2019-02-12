@@ -201,3 +201,50 @@ foo('Hey!', 2, 2, key1='a', key2='b')
 # (2, 2)
 # {'key1': 'a', 'key2': 'b'}
 
+def foo(x, *args, **kwargs):
+    new_args = args + ('extra', )
+    kwargs[name] = 'Alice'
+    bar(x, *new_args, **kwargs)
+# demonstrated a way to edit a function's arguments
+
+import functools
+
+
+def trace(f):
+    @functools.wraps(f)
+    def decorated_function(*args, **kwargs):
+        print(f, args, kwargs)
+        result = f(*args, **kwargs)
+        print(result)
+    return decorated_function
+
+
+@trace
+def greet(greeting, name):
+    return f'{greeting}, {name}!'
+
+
+greet('Hello', 'Bob')
+
+
+def print_vector(x, y, z):
+    print(f'<{x}, {y}, {z}>')
+
+
+print_vector(0, 1, 5)
+
+tuple_vector = (1, 2, 4)
+list_vector = [1, 2, 4]
+
+print_vector(*tuple_vector)     # unpacking function arguments
+print_vector(*list_vector)
+
+genexpr = (x**3 for x in range(3))
+
+print_vector(*genexpr)  # perfect example to unpack an iterable
+
+dict_vec = {'y': 10, 'z': 20, 'x': 30}
+
+print_vector(*dict_vec)     # keys
+print_vector(**dict_vec)    # values
+
