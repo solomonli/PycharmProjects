@@ -40,3 +40,8 @@ genexpr = (x**3 for x in range(3))
 
 print_vector(*genexpr)
 
+dict_vec = {'y': 10, 'z': 20, 'x': 30}
+
+print_vector(*dict_vec)
+print_vector(**dict_vec)
+
