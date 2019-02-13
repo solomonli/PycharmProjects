@@ -241,7 +241,7 @@ print_vector(*list_vector)
 
 genexpr = (x**3 for x in range(3))
 
-print_vector(*genexpr)  # perfect example to unpack an iterable
+print_vector(*genexpr)  # perfect example to unpack an iterator
 
 dict_vec = {'y': 10, 'z': 20, 'x': 30}
 
