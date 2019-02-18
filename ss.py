@@ -149,3 +149,140 @@ while True:
 
 
 
+# everything about the deep / shallow copy
+
+
+import copy
+copy.copy()
+copy.deepcopy()
+
+from collections import namedtuple
+
+Car = namedtuple('Car', 'color mileage')        # creates a blueprint (like a class)
+
+my_car = Car('red', 123456)
+my_car.color
+# 'red'
+
+my_car
+# Car(color='red', mileage=123456)
+
+my_car.color = 'blue'
+# AttributeError: can't set attribute
+
+ElectricCar = namedtuple('ElectricCar', Car._fields + ('charge', ))
+ElectricCar('silver', 1243, 35.5)
+# ElectricCar(color='silver', mileage=1243, charge=35.5)
+
+"""some Built-in Helper Methods"""
+my_car._asdict()
+# OrderedDict([('color', 'red'), ('mileage', 123456)])
+
+json.dump(my_car._asdict())
+# '{"color": "red", "mileage": 123456}'
+
+my_car._replace(color='blue')       # it makes a shallow copy of a tuple and replaces some of the fields
+# Car(color='blue', mileage=123456)
+my_car      # the my_car instance remains unchanged
+# Car(color='red', mileage=123456)
+
+Car._make(['black', 987])     # create a namedtuple instance from a sequence or iterable
+# Car(color='black', mileage=987)
+
+"""
+Class variables vs. Instance variables:
+CVs are in the blueprint and they apply to all the instances by default. 
+MODIFING A CLASS VARABLE AFFECTS ALL OBJECT INSTANCES AT THE SAME TIME. 
+"""
+
+class Dog:
+    num_leg = 4     # Class variable
+
+    def __init__(self, name):
+        self.name = name        # Instance variable
+
+jack = Dog('Jack'); jill = Dog('Jill')
+jack.name, jill.name        # print the names
+
+jack.num_leg, jill.num_leg, Dog.num_leg     # (4, 4, 4)
+
+Dog.name        # AttributeError: type object 'Dog' has no attribute 'name'
+
+Dog.num_leg = 6
+jack.num_leg, jill.num_leg, Dog.num_leg     # (6, 6, 6)
+
+Dog.num_leg = 4; jack.num_leg = 6
+jack.num_leg, jill.num_leg, Dog.num_leg     # (6, 4, 4)     Jill was updated due the overridden blueprint
+
+jack.num_leg, jack.__class__.num_leg        # (6, 4)        the instance and the class
+
+class CountedObject:
+    num_instances = 0
+
+    def __init__(self):
+        self.__class__.num_instances += 1
+
+CountedObject.num_instances, CountedObject().num_instances, CountedObject().num_instances, \
+CountedObject().num_instances, CountedObject.num_instances
+# (0, 1, 2, 3, 3) The counter works!
+
+"""
+class BuggyCountedObject:
+    num_instances = 0
+
+    def __init__(self):
+        self.num_instances += 1
+
+BuggyCountedObject.num_instances, BuggyCountedObject().num_instances, BuggyCountedObject().num_instances, \
+BuggyCountedObject().num_instances, BuggyCountedObject.num_instances
+# (0, 1, 1, 1, 0) a buggy counter!
+"""
+
+# Instance, Class, and Static Methods Demystified
+
+
+class MyClass:
+    """
+    MyClass was setup in such a way that each method's implementation returns a tuple containing information
+    we can use to trace what's going on and which part of the class or object that method can access.
+    """
+    def method(self):
+        return 'instance method called', self
+        # “By the way, instance methods can also access the class itself through the self.__class__ attribute.
+        # This makes instance methods powerful in terms of access restrictions—they can
+        # freely modify state on the object instance and on the class itself.”
+        # [Solomon] I don't quite understand this part
+
+    @classmethod
+    def classmethod(cls):
+        return 'class method called', cls
+
+    @staticmethod
+    def staticmethod():
+        return 'static method called'
+
+
+obj = MyClass()
+
+obj.method()    # ('instance method called', <__main__.MyClass at 0x10bfb7358>)
+MyClass.method(obj)     # ('instance method called', <__main__.MyClass at 0x10bfb7358>)
+
+obj.classmethod()   # ('class method called', __main__.MyClass)
+
+obj.staticmethod()  # 'static method called'
+
+MyClass.classmethod()   # ('class method called', __main__.MyClass)
+MyClass.staticmethod()  # 'static method called'
+MyClass.method()    # TypeError: method() missing 1 required positional argument: 'self'
+
+
+class Pizza:
+    def __init__(self, ingredients):
+        self.ingredients = ingredients
+
+    def __repr__(self):
+        return f'Pizza({self.ingredients!r})'
+
+
+Pizza(['cheese', 'tomatoes'])
+
