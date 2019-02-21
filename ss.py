@@ -302,3 +302,5 @@ class Pizza:
 
 Pizza(['cheese', 'tomatoes'])
 
+import numpy as np
+np.random.rand()
