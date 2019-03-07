@@ -102,21 +102,18 @@ def missing_int(lst):
     if len(pos) == 0:
         return 1
 
-    if len(pos) == 1:
-        return pos[0] + 1
+    standard = pos[0] + 1
 
-    natural = pos[0]
-
-    for i in pos:
-        if i == natural:
-            natural += 1
+    for i in pos[1:]:
+        if i == standard:
+            standard += 1
         else:
             break
 
-    return natural
+    return standard
 
 
-print(missing_int([2, 1]))
+print(missing_int([1]))
 
 
 
