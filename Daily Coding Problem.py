@@ -1,7 +1,3 @@
-"""
-
-"""
-
 def add_up(lst, k):
     """
     Given a list of numbers and a number k, return whether any two numbers from the list add up to k.
@@ -9,6 +5,7 @@ def add_up(lst, k):
     For example, given [10, 15, 3, 7] and k of 17, return true since 10 + 7 is 17.
 
     Bonus: Can you do this in one pass?
+
     :param lst: a list of integers
     :param k: an integer
     :return: boolean
@@ -61,7 +58,50 @@ def multiple_rest(lst):
 print(multiple_rest([1, 2, 3]))
 
 
+"""
+Given the root to a binary tree, implement serialize(root), which serializes the tree into a string,
+and deserialize(s), which deserializes the string back into the tree.
 
+For example, given the following Node class
+
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+The following test should pass:
+
+node = Node('root', Node('left', Node('left.left')), Node('right'))
+assert deserialize(serialize(node)).left.left.val == 'left.left'
+"""
+class Node:
+
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def missing_int(lst):
+    """
+    Given an array of integers, find the first missing positive integer in linear time and constant space.
+    In other words, find the lowest positive integer that does not exist in the array.
+
+    For example, the input [3, 4, -1, 1] should give 2. The input [1, 2, 0] should give 3.
+
+    You can modify the input array in-place.
+
+    :param lst: a list of integers that can contain duplicates and negative numbers
+    :return: an integer
+    """
+    pos = [x for x in lst if x > 0]
+    pos.sort()
+
+    for i in range(len(pos)):
+        if pos[i+1] - pos[i] == 1 and len(pos) > 2:
+            break
+        else:
+            return pos[i] + 1
 
 
 
