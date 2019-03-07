@@ -16,15 +16,16 @@ def add_up(lst, k):
     for i in range(l // 2):
         for j in range(l // 2, l):
             ll.append(lst[i] + lst[j] == k)
-     return any(ll)
+    return any(ll)
 
 # in a single line
 
 def add_up(lst, k):
     return any([lst[i] + lst[j] == k for i in range(len(lst) // 2) for j in range(len(lst) // 2, len(lst))])
 
-from itertools import combinations
-any(a + b == k for a, b in combinations(lst, 2))
+def add_up(lst, k):
+    from itertools import combinations
+    return any(a + b == k for a, b in combinations(lst, 2))
 
 
 
@@ -55,7 +56,7 @@ def multiple_rest(lst):
     return res
 
 
-print(multiple_rest([1, 2, 3]))
+# print(multiple_rest([1, 2, 3]))
 
 
 """
@@ -94,17 +95,28 @@ def missing_int(lst):
     :param lst: a list of integers that can contain duplicates and negative numbers
     :return: an integer
     """
-    pos = [x for x in lst if x > 0]
+    pos = list({x for x in lst if x > 0})
+
     pos.sort()
 
-    for i in range(len(pos)):
-        if pos[i+1] - pos[i] == 1 and len(pos) > 2:
-            break
+    if len(pos) == 0:
+        return 1
+
+    if len(pos) == 1:
+        return pos[0] + 1
+
+    natural = pos[0]
+
+    for i in pos:
+        if i == natural:
+            natural += 1
         else:
-            return pos[i] + 1
+            break
+
+    return natural
 
 
-
+print(missing_int([2, 1]))
 
 
 
