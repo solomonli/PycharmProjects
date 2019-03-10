@@ -99,7 +99,7 @@ def missing_int(lst):
 
     pos.sort()
 
-    if len(pos) == 0:
+    if not pos:
         return 1
 
     standard = pos[0] + 1
@@ -113,7 +113,7 @@ def missing_int(lst):
     return standard
 
 
-print(missing_int([1]))
+# print(missing_int([1]))
 
 
 def merge(lists):
@@ -126,6 +126,7 @@ def merge(lists):
 
     while heap:
         val, list_ind, element_ind = heapq.heappop(heap)
+        # value, list index, element index
 
         merged_list.append(val)
 
@@ -139,4 +140,3 @@ def merge(lists):
 
 
 print(merge([[1], [1, 3, 5], [1, 10, 20, 30, 40]]))
-
