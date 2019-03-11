@@ -301,19 +301,23 @@ since we pick 5 and 5.
 Follow-up: Can you do this in O(N) time and constant space?
 """
 
-def non_adjacent_sum(lst):
+
+def max_sum(lst, l):
     """
     returns the largest sum of non-adjacent numbers: [2, 4, 6, 2, 5] should return 13,
     since we pick 2, 6, and 5. [5, 1, 1, 5] should return 10, since we pick 5 and 5.
     :param lst: a list of numbers that can be 0 or negative
+    :param l: an integer - the length of list lst minus one
     :return: an integer
     """
-    from itertools import combinations
+    if l == 0:
+        return lst[0]
 
-    list1 = [lst[i] for i in range(0, len(lst), 2)]
-    list2 = [lst[i] for i in range(1, len(lst), 2)]
+    if l == 1:
+        return max(lst[0], lst[1])
 
-    sum1 = sum(x for x in list1 if x > 0)
-    sum2 = sum(x for x in list2 if x > 0)
+    return max(max_sum(lst, l - 2) + lst[l], max_sum(lst, l - 1))
 
-    return max(sum1, sum2)
+
+print(max_sum([5, 1, 1, 5], 3))
+
