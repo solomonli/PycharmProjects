@@ -76,12 +76,92 @@ The following test should pass:
 node = Node('root', Node('left', Node('left.left')), Node('right'))
 assert deserialize(serialize(node)).left.left.val == 'left.left'
 """
+
 class Node:
 
     def __init__(self, val, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+
+# this function doesn't seem very fit to this problem
+def serialize(tree_node):
+    vals = []
+
+    def encode(node):
+        if node:
+            vals.append(node.val)
+            encode(node.left)
+            encode(node.right)
+        else:
+            vals.append('#')
+
+    encode(tree_node)
+
+    return '.'.join(vals)
+
+
+# this function seems problematic...
+def deserialize(tree_serial):
+    def decode(vals):
+
+        val = next(vals)
+        if val == '#':
+            return None
+
+        node = Node(val)
+        node.left = decode(vals)
+        node.right = decode(vals)
+
+        return node
+
+    vals = iter(tree_serial.split('.'))
+
+    return decode(vals)
+
+
+# below is what I found on the Internet
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        """
+        the right occasion for a repr to fit in
+        :return:
+        """
+        return ('Node(' + repr(self.val) + ', '
+                        + repr(self.left) + ', '
+                        + repr(self.right) + ')')
+
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return (self.val == other.val and
+                    self.left == other.left and
+                    self.right == other.right)
+        else:
+            return False
+
+    def __hash__(self):
+        """
+        optional here
+        :return:
+        """
+        return hash((self.val, self.left, self.right))
+
+
+serialize = repr
+deserialize = eval
+
+node = Node('root', Node('left', Node('left.left')), Node('right'))
+assert deserialize(serialize(node)).left.left.val == 'left.left'
+assert deserialize(serialize(node)) == node
+assert hash(deserialize(serialize(node))) == hash(node)
+# above is what I found on the Internet
+
 
 def missing_int(lst):
     """
@@ -116,6 +196,7 @@ def missing_int(lst):
 # print(missing_int([1]))
 
 
+# You need some reading from https://docs.python.org/3.6/library/heapq.html#theory
 def merge(lists):
     import heapq
 
@@ -140,3 +221,99 @@ def merge(lists):
 
 
 print(merge([[1], [1, 3, 5], [1, 10, 20, 30, 40]]))
+
+
+"""
+cons(a, b) constructs a pair, and car(pair) and cdr(pair) returns the first and last element of that pair.
+For example, car(cons(3, 4)) returns 3, and cdr(cons(3, 4)) returns 4.
+
+Given this implementation of cons:
+
+def cons(a, b):
+    def pair(f):
+        return f(a, b)
+    return pair
+
+Implement car and cdr.
+
+"""
+def cons(a, b):
+    def pair(f):
+        return f(a, b)
+
+    return pair
+
+# @cons The function cons, car, or cdr was not written as a decorator
+
+
+def car(f):
+    def left(a, b):
+        return a
+
+    return f(left)
+
+
+def cdr(f):
+    def right(a, b):
+        return b
+
+    return f(right)
+
+
+print(car(cons(3, 4)))
+print(cdr(cons(3, 4)))
+
+"""
+An XOR linked list is a more memory efficient doubly linked list. Instead of each node holding next and prev fields, 
+it holds a field named both, which is an XOR of the next node and the previous node. Implement an XOR linked list; 
+it has an add(element) which adds the element to the end, and a get(index) which returns the node at index.
+
+If using a language that has no pointers (such as Python), you can assume you have access to 
+get_pointer and dereference_pointer functions that converts between nodes and memory addresses.
+"""
+
+"""
+Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
+For example, the message '111' would give 3, since it could be decoded as 'aaa', 'ka', and 'ak'.
+You can assume that the messages are decodable. For example, '001' is not allowed.
+"""
+
+"""
+A unival tree (which stands for "universal value") is a tree where all nodes under it have the same value.
+Given the root to a binary tree, count the number of unival subtrees.
+For example, the following tree has 5 unival subtrees:
+   0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
+"""
+
+"""
+Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. 
+Numbers can be 0 or negative.
+
+For example, [2, 4, 6, 2, 5] should return 13, since we pick 2, 6, and 5. [5, 1, 1, 5] should return 10, 
+since we pick 5 and 5.
+
+Follow-up: Can you do this in O(N) time and constant space?
+"""
+
+def non_adjacent_sum(lst):
+    """
+    returns the largest sum of non-adjacent numbers: [2, 4, 6, 2, 5] should return 13,
+    since we pick 2, 6, and 5. [5, 1, 1, 5] should return 10, since we pick 5 and 5.
+    :param lst: a list of numbers that can be 0 or negative
+    :return: an integer
+    """
+    from itertools import combinations
+
+    list1 = [lst[i] for i in range(0, len(lst), 2)]
+    list2 = [lst[i] for i in range(1, len(lst), 2)]
+
+    sum1 = sum(x for x in list1 if x > 0)
+    sum2 = sum(x for x in list2 if x > 0)
+
+    return max(sum1, sum2)
