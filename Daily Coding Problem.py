@@ -272,11 +272,79 @@ If using a language that has no pointers (such as Python), you can assume you ha
 get_pointer and dereference_pointer functions that converts between nodes and memory addresses.
 """
 
-"""
-Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
-For example, the message '111' would give 3, since it could be decoded as 'aaa', 'ka', and 'ak'.
-You can assume that the messages are decodable. For example, '001' is not allowed.
-"""
+
+def decode_count(string):
+    """
+    Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the number of ways it can be decoded.
+    For example, the message '111' would give 3, since it could be decoded as 'aaa', 'ka', and 'ak'.
+    You can assume that the messages are decodable. For example, '001' is not allowed.
+
+    :param string: a string of alpha letters
+    :return: an integer, by running base_count(string, len of string)
+    """
+
+    def base_count(sub_string, k):
+        """
+        a helper function that will be return the numbers of decoding of the last K digits of sub_string
+        it will be run recursively in the main function
+        :param sub_string: a str, the input string
+        :param k: an integer, the last K digits of sub_string
+        :return:
+        """
+        if k == 0:
+            return 1
+
+        s = len(sub_string) - k
+
+        if sub_string[s] == '0':
+            return 0
+
+        res = base_count(sub_string, k - 1)
+
+        if k >= 2 and sub_string[s: s+2] <= '26':
+            res += base_count(sub_string, k - 2)
+
+        return res
+
+    return base_count(string, len(string))
+
+
+print(decode_count('222222'))
+
+
+def decode_count_dp(string):
+
+    memo = [None for _ in range(len(string) + 1)]
+    return base_count_dp(string, len(string), memo)
+
+
+def base_count_dp(sub_string, k, memo):
+
+    if k == 0:
+        return 1
+
+    s = len(sub_string) - k
+
+    if sub_string[s] == '0':
+        return 0
+
+    # global memo
+
+    if memo[k] is not None:
+        return memo[k]
+
+    res = base_count_dp(sub_string, k - 1, memo)
+
+    if k >= 2 and sub_string[s: s+2] <= '26':
+        res += base_count_dp(sub_string, k - 2, memo)
+
+    memo[k] = res
+
+    return res
+
+
+print(decode_count_dp('222222'))
+
 
 """
 A unival tree (which stands for "universal value") is a tree where all nodes under it have the same value.
