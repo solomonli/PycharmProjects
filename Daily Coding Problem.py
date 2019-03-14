@@ -252,12 +252,19 @@ def car(f):
 
     return f(left)
 
+def car(f):
+    return f(lambda a, b: a)
+
 
 def cdr(f):
     def right(a, b):
         return b
 
     return f(right)
+
+
+def cdr(f):
+    return f(lambda a, b: b)
 
 
 print(car(cons(3, 4)))
