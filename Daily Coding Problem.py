@@ -390,3 +390,7 @@ def max_sum(lst, l):
 
 print(max_sum([2, 4, -6, 2, 15], 5))
 
+"""
+Implement a job scheduler which takes in a function f and an integer n, and calls f after n milliseconds.
+"""
+
