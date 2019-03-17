@@ -401,3 +401,48 @@ print(max_sum([2, 4, -6, 2, 15], 5))
 Implement a job scheduler which takes in a function f and an integer n, and calls f after n milliseconds.
 """
 
+
+def LCS(s1, s2, i1, i2):
+    """
+    find the Longest Common Sequence between two strings
+    :param s1: str
+    :param s2: str
+    :param i1: int, the position pointer
+    :param i2: int, the position pointer
+    :return: str
+    """
+    if i1 == len(s1) or i2 == len(s2):
+        return ''
+
+    if s1[i1] == s2[i2]:
+        return s1[i1] + LCS(s1, s2, i1+1, i2+1)
+    else:
+        return max(LCS(s1, s2, i1, i2+1), LCS(s1, s2, i1+1, i2))
+
+
+def LCSmemo(s1, s2, i1, i2, memo):
+    """
+    find the Longest Common Sequence between two strings
+    :param s1: str
+    :param s2: str
+    :param i1: int, the position pointer
+    :param i2: int, the position pointer
+    :param memo: int, the position pointer
+    :return: str
+    """
+    import numpy as np
+
+    if i1 == len(s1) or i2 == len(s2):
+        return ''
+
+    memo = np.zeros([len(s1), len(s2])
+
+    if memo[i1][i2] != 0:
+        return memo[i1][i2]
+
+    if s1[i1] == s2[i2]:
+        memo[i1][i2] = s1[i1] + LCSmemo(s1, s2, i1+1, i2+1,memo)
+        return memo[i1][i2]
+    else:
+        return max(LCSmemo(s1, s2, i1, i2+1, memo), LCSmemo(s1, s2, i1+1, i2, memo))
+
