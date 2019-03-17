@@ -401,6 +401,8 @@ print(max_sum([2, 4, -6, 2, 15], 5))
 Implement a job scheduler which takes in a function f and an integer n, and calls f after n milliseconds.
 """
 
+import datetime
+
 
 def LCS(s1, s2, i1, i2):
     """
@@ -409,7 +411,7 @@ def LCS(s1, s2, i1, i2):
     :param s2: str
     :param i1: int, the position pointer
     :param i2: int, the position pointer
-    :return: str
+    :return: the LCS str
     """
     if i1 == len(s1) or i2 == len(s2):
         return ''
@@ -420,29 +422,50 @@ def LCS(s1, s2, i1, i2):
         return max(LCS(s1, s2, i1, i2+1), LCS(s1, s2, i1+1, i2))
 
 
-def LCSmemo(s1, s2, i1, i2, memo):
+tik = datetime.datetime.now()
+
+print(LCS('Jeez I am waiting for snow.', "Jeez I've been waiting for snow.", 0, 0))
+
+tok = datetime.datetime.now()
+
+print(tok - tik)
+
+
+def LCSmemo(s1, s2, i1, i2):
     """
     find the Longest Common Sequence between two strings
     :param s1: str
     :param s2: str
     :param i1: int, the position pointer
     :param i2: int, the position pointer
-    :param memo: int, the position pointer
-    :return: str
+    :param memo: a list of lists of None to memory the results
+    :return: the LCS str
     """
-    import numpy as np
+    memo = [[None] * len(s2) for _ in range(len(s1))]       # cool trick!
+
+    return helper(s1, s2, i1, i2, memo)
+
+
+def helper(s1, s2, i1, i2, memo):
 
     if i1 == len(s1) or i2 == len(s2):
         return ''
 
-    memo = np.zeros([len(s1), len(s2])
-
-    if memo[i1][i2] != 0:
+    if memo[i1][i2] is not None:
         return memo[i1][i2]
 
     if s1[i1] == s2[i2]:
-        memo[i1][i2] = s1[i1] + LCSmemo(s1, s2, i1+1, i2+1,memo)
+        memo[i1][i2] = s1[i1] + helper(s1, s2, i1+1, i2+1, memo)
         return memo[i1][i2]
     else:
-        return max(LCSmemo(s1, s2, i1, i2+1, memo), LCSmemo(s1, s2, i1+1, i2, memo))
+        memo[i1][i2] = max(helper(s1, s2, i1, i2+1, memo), helper(s1, s2, i1+1, i2, memo))
+        return memo[i1][i2]
 
+
+tikk = datetime.datetime.now()
+
+print(LCSmemo('Jeez, I am waiting for snow.', "Jeez, I've been waiting for snow.", 0, 0))
+
+tokk = datetime.datetime.now()
+
+print(tok - tik)
