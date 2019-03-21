@@ -235,7 +235,6 @@ def cons(a, b):
     return pair
 
 Implement car and cdr.
-
 """
 def cons(a, b):
     def pair(f):
@@ -252,8 +251,9 @@ def car(f):
 
     return f(left)
 
+
 def car(f):
-    return f(lambda a, b: a)
+    return f(lambda a, b: a)        # !
 
 
 def cdr(f):
@@ -264,7 +264,7 @@ def cdr(f):
 
 
 def cdr(f):
-    return f(lambda a, b: b)
+    return f(lambda a, b: b)        # !
 
 
 print(car(cons(3, 4)))
@@ -462,10 +462,10 @@ def helper(s1, s2, i1, i2, memo):
         return memo[i1][i2]
 
 
-tikk = datetime.datetime.now()
+tiik = datetime.datetime.now()
 
 print(LCSmemo('Jeez, I am waiting for snow.', "Jeez, I've been waiting for snow.", 0, 0))
 
-tokk = datetime.datetime.now()
+took = datetime.datetime.now()
 
-print(tok - tik)
+print(took - tiik)
