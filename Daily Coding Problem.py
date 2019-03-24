@@ -469,3 +469,31 @@ print(LCSmemo('Jeez, I am waiting for snow.', "Jeez, I've been waiting for snow.
 took = datetime.datetime.now()
 
 print(took - tiik)
+
+
+seq = []
+
+
+def collatz(num):
+    """
+    Then each term is obtained from the previous term as follows:
+    if the previous term is even, the next term is one half the previous term.
+    If the previous term is odd, the next term is 3 times the previous term plus 1.
+    The conjecture is that no matter what value of n, the sequence will always reach 1.
+    :param num: a positive int
+    :return: the Collatz Sequence as a list
+    """
+    seq.append(num)
+
+    if seq[-1] == 1:
+        return seq
+
+    # print(seq)
+
+    if seq[-1] % 2 == 0:
+        return collatz(num // 2)
+    elif seq[-1] % 2 != 0:
+        return collatz(num * 3 + 1)
+
+
+print(collatz(97))
