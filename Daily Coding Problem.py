@@ -483,6 +483,11 @@ def collatz(num):
     :param num: a positive int
     :return: the Collatz Sequence as a list
     """
+    try:
+        int(num)
+    except ValueError:
+        print('Please input an integer instead')
+
     seq.append(num)
 
     if seq[-1] == 1:
@@ -497,3 +502,25 @@ def collatz(num):
 
 
 print(collatz(97))
+
+
+def comma_code(lst):
+    """
+    spam = ['apples', 'bananas', 'tofu', 'cats']
+    Write a function that takes a list value as an argument and returns
+    a string with all the items separated by a comma and a space, with and
+    inserted before the last item. For example, passing the previous spam list to
+    the function would return 'apples, bananas, tofu, and cats'.
+    But your function should be able to work with any list value passed to it.
+    :param lst: a list
+    :return: a str
+    """
+    string = ''
+
+    for i in lst[:-1]:
+        string += (str(i) + ', ')
+
+    return string + 'and ' + str(lst[-1])
+
+
+print(comma_code([3.4, 'bananas', 'tofu', 'cats']))
