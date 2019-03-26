@@ -580,3 +580,22 @@ stuff = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
 print(display_inventory(stuff))
 
 
+def add_to_inventory(inventory, added_items):
+
+    for element in added_items:
+        if element in inventory:        # also work "element in inventory.keys()"
+            inventory[element] += 1
+        else:
+            inventory[element] = 1
+
+    return inventory
+
+
+inv = {'gold coin': 42, 'rope': 1}
+
+dragon_loot = ['gold coin', 'dagger', 'sword', 'gold coin', 'ruby']
+
+inv = add_to_inventory(inv, dragon_loot)
+
+print(inv)
+
