@@ -524,3 +524,59 @@ def comma_code(lst):
 
 
 print(comma_code([3.4, 'bananas', 'tofu', 'cats']))
+
+
+grid = [['.', '.', '.', '.', '.', '.'],
+        ['.', 'O', 'O', '.', '.', '.'],
+        ['O', 'O', 'O', 'O', '.', '.'],
+        ['O', 'O', 'O', 'O', 'O', '.'],
+        ['.', 'O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O', '.'],
+        ['O', 'O', 'O', 'O', '.', '.'],
+        ['.', 'O', 'O', '.', '.', '.'],
+        ['.', '.', '.', '.', '.', '.']]
+
+
+def rotate_clockwise(lst):
+    """
+    to print this image:
+    ..OO.OO..
+    .OOOOOOO.
+    .OOOOOOO.
+    ..OOOOO..
+    ...OOO...
+    ....O....
+    :param lst: a list of lists (m*n)
+    :return: an array of strings (n*m)
+    """
+    for n in range(len(lst[0])):
+        for m in range(len(lst)):
+            print(lst[m][n], end='')
+        print()
+    pass
+
+    # print(70, 60, 51 41, 31, 21, 10, 00)
+
+
+print(rotate_clockwise(grid))
+
+
+spam = {}
+spam.setdefault('color', 'black')
+
+stuff = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+
+
+def display_inventory(inventory):
+    print("Inventory:")
+    item_total = 0
+    for k, v in inventory.items():
+        print(str(v) + ' ' + k)
+        item_total += v
+    return "Total number of items: " + str(item_total)
+
+
+stuff = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+print(display_inventory(stuff))
+
+
