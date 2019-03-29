@@ -42,7 +42,7 @@ def perf_timer(func):
 	return wrapper
 
 
-# @perf_timer
+# @perf_timer		# it's just a way to say "say_whee = perf_timer(say_whee)"
 def say_whee():
 	print('Whee!')
 
