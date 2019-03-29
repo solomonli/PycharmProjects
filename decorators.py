@@ -6,7 +6,7 @@ def my_decorator(func):
 	return wrapper
 
 
-@my_decorator		# it's just a way to say "say_whee = my_decorator(say_whee)"
+# @my_decorator		# it's just a way to say "say_whee = my_decorator(say_whee)"
 def say_whee():
 	print('Whee!')
 
@@ -18,7 +18,7 @@ def do_twice(func):
 	return wrapper
 
 
-@do_twice		# it's just a way to say "say_whee = do_twice(say_whee)"
+# @do_twice		# it's just a way to say "say_whee = do_twice(say_whee)"
 def say_whee():
 	print('Whee!')
 
@@ -47,4 +47,4 @@ def say_whee():
 	print('Whee!')
 
 
-say_whee()
+# say_whee()
