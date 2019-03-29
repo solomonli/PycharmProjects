@@ -12,9 +12,9 @@ def say_whee():
 
 
 def do_twice(func):
-	def wrapper():
-		func()
-		func()
+	def wrapper(*args, **kwargs):
+		func(*args, **kwargs)
+		return func(*args, **kwargs)		# the function wrapper should return nothing
 	return wrapper
 
 
