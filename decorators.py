@@ -1,9 +1,14 @@
-def my_decorator(func):
-	def wrapper():
-		print('Before the func is called')
-		func()
-		print('After the func is called')
-	return wrapper
+import datetime, functools, time
+
+
+def decorator(func):
+    @functools.wraps(func)
+    def wrapper_decorator(*args, **kwargs):
+        # Do something before
+        value = func(*args, **kwargs)
+        # Do something after
+        return value
+    return wrapper_decorator
 
 
 # @my_decorator		# it's just a way to say "say_whee = my_decorator(say_whee)"
@@ -27,7 +32,7 @@ def perf_timer(func):
 
 	def wrapper(*args, **kwargs):
 
-		import datetime
+		# import datetime
 
 		tik = datetime.datetime.now()
 
@@ -42,9 +47,30 @@ def perf_timer(func):
 	return wrapper
 
 
-# @perf_timer		# it's just a way to say "say_whee = perf_timer(say_whee)"
-def say_whee():
-	print('Whee!')
+def timer(func):
 
+	@functools.wraps(func)
+	def wrapper_timer(*args, **kwargs):
 
-# say_whee()
+		start_time = time.perf_counter()
+
+		value = func(*args, **kwargs)
+
+		end_time = time.perf_counter()
+
+		run_time = end_time - start_time
+
+		print(f"Finished {func.__name__!r} in {run_time:.4f} secs")
+
+		return value
+
+	return wrapper_timer
+
+# time.perf_counter()
+"""
+Return the value (in fractional seconds) of a performance counter, i.e. 
+a clock with the highest available resolution to measure a short duration. 
+It does include time elapsed during sleep and is system-wide. 
+The reference point of the returned value is undefined, 
+so that only the difference between the results of consecutive calls is valid.
+"""

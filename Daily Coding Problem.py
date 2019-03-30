@@ -401,8 +401,6 @@ print(max_sum([2, 4, -6, 2, 15], 5))
 Implement a job scheduler which takes in a function f and an integer n, and calls f after n milliseconds.
 """
 
-import datetime
-
 
 def LCS(s1, s2, i1, i2):
     """
@@ -422,13 +420,7 @@ def LCS(s1, s2, i1, i2):
         return max(LCS(s1, s2, i1, i2+1), LCS(s1, s2, i1+1, i2))
 
 
-tik = datetime.datetime.now()
-
 print(LCS('Jeez I am waiting for snow.', "Jeez I've been waiting for snow.", 0, 0))
-
-tok = datetime.datetime.now()
-
-print(tok - tik)
 
 
 def LCSmemo(s1, s2, i1, i2):
