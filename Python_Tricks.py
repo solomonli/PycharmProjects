@@ -316,8 +316,7 @@ type(td)    # datetime.date
 def __repr__(self):
     return f'Car({self.color!r}, {self.mileage!r})'
 # Please note that I’m using the !r conversion flag to make sure the output string uses
-# repr(self.color) and repr(self.mileage)
-# instead of str(self.color) and str(self.mileage).
+# repr(self.color) and repr(self.mileage) instead of str(self.color) and str(self.mileage).
 
 
 # Here’s a complete example for Python 3, including an optional __str__ implementation:

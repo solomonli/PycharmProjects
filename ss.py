@@ -1,7 +1,7 @@
-from decorators import perf_timer
+from decorators import timer, debug
 
 
-@perf_timer
+@debug
 def LCSmemo(s1, s2, i1, i2):
     """
     find the Longest Common Sequence between two strings
@@ -33,4 +33,4 @@ def helper(s1, s2, i1, i2, memo):
         return memo[i1][i2]
 
 
-print(LCSmemo('Jeez, I am waiting for snow.', "Jeez, I've been waiting for snow.", 0, 0))
+print(LCSmemo('Jeez, I am waiting for the snow in NYC.', "Jeez, I 've been waiting for the snow in NYC.", 0, 0))
