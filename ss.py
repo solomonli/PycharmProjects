@@ -1,36 +1,16 @@
-from decorators import timer, debug
+# from decorators import timer, debug, job_schedule
 
-
-@debug
-def LCSmemo(s1, s2, i1, i2):
+def query_string(string, target):
     """
-    find the Longest Common Sequence between two strings
-    :param s1: str
-    :param s2: str
-    :param i1: int, the position pointer
-    :param i2: int, the position pointer
-    :param memo: a list of lists of None to memory the results
-    :return: the LCS str
+    Implement an autocomplete system. That is, given a query string s and a set of all possible query strings,
+    return all strings in the set that have s as a prefix.
+    For example, given the query string de and the set of strings [dog, deer, deal], return [deer, deal].
+    Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
+    :param string: str (e.g. 'de')
+    :param target: list of strings (e.g. [dog, deer, deal])
+    :return: list of strings
     """
-    memo = [[None] * len(s2) for _ in range(len(s1))]       # cool trick!
-
-    return helper(s1, s2, i1, i2, memo)
+    return list(filter(lambda x: x.startswith(string), target))
 
 
-def helper(s1, s2, i1, i2, memo):
-
-    if i1 == len(s1) or i2 == len(s2):
-        return ''
-
-    if memo[i1][i2] is not None:
-        return memo[i1][i2]
-
-    if s1[i1] == s2[i2]:
-        memo[i1][i2] = s1[i1] + helper(s1, s2, i1+1, i2+1, memo)
-        return memo[i1][i2]
-    else:
-        memo[i1][i2] = max(helper(s1, s2, i1, i2+1, memo), helper(s1, s2, i1+1, i2, memo))
-        return memo[i1][i2]
-
-
-print(LCSmemo('Jeez, I am waiting for the snow in NYC.', "Jeez, I 've been waiting for the snow in NYC.", 0, 0))
+print(query_string('de', ['dog', 'deer', 'deal']))

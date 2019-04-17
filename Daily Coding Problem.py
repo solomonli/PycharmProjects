@@ -623,3 +623,26 @@ for x in range(len(table[0])):
     for y in range(len(table)):
         print(table[y][x].rjust(max_size[y]), end=' ')      # here you can also do " .rjust(max_size[y] + 1), end='' "
     print('')
+
+
+def job_scheduler(func, n):
+    """
+    Implement a job scheduler which takes in a function f and an integer n, and calls f after n milliseconds
+    :param f: a pre-defined function
+    :param n: int of milliseconds
+    :return: called function f
+    """
+    import time
+    time.sleep(n / 1000)
+
+    return func()
+
+
+def h():
+    return "Hello, world!"
+
+
+print(job_scheduler(h, 5000))
+
+
+

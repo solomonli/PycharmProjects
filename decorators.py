@@ -75,13 +75,14 @@ The reference point of the returned value is undefined,
 so that only the difference between the results of consecutive calls is valid.
 """
 
+
 def debug(func):
 	"""Print the function signature and return value"""
 
 	@functools.wraps(func)
 	def wrapper_debug(*args, **kwargs):
-		args_repr = [repr(a) for a in args]						# 1
-		kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]	# 2
+		args_repr = [repr(a) for a in args]							# 1
+		kwargs_repr = [f"{k}={v!r}" for k, v in kwargs.items()]		# 2
 
 		signature = ", ".join(args_repr + kwargs_repr)				# 3
 
