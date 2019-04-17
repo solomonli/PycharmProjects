@@ -6,6 +6,7 @@ def query_string(string, target):
     return all strings in the set that have s as a prefix.
     For example, given the query string de and the set of strings [dog, deer, deal], return [deer, deal].
     Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
+    Can I assume case sensitivity?
     :param string: str (e.g. 'de')
     :param target: list of strings (e.g. [dog, deer, deal])
     :return: list of strings
@@ -14,3 +15,4 @@ def query_string(string, target):
 
 
 print(query_string('de', ['dog', 'deer', 'deal']))
+
