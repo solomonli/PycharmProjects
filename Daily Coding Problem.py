@@ -292,11 +292,11 @@ def decode_count(string):
 
     def base_count(sub_string, k):
         """
-        a helper function that will be return the numbers of decoding of the last K digits of sub_string
-        it will be run recursively in the main function
+        A helper function that will be return the numbers of decoding of the last K digits of sub_string.
+        It will be run recursively in the main function.
         :param sub_string: a str, the input string
         :param k: an integer, the last K digits of sub_string
-        :return:
+        :return: an int
         """
         if k == 0:
             return 1
@@ -644,5 +644,104 @@ def h():
 
 print(job_scheduler(h, 5000))
 
+# from decorators import timer, debug, job_schedule
 
+def query_string(string, target):
+    """
+    Implement an autocomplete system. That is, given a query string s and a set of all possible query strings,
+    return all strings in the set that have s as a prefix.
+    For example, given the query string de and the set of strings [dog, deer, deal], return [deer, deal].
+    Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
+    Can I assume case sensitivity?
+    :param string: str (e.g. 'de')
+    :param target: list of strings (e.g. [dog, deer, deal])
+    :return: list of strings
+    """
+    return list(filter(lambda x: x.startswith(string), target))
+
+
+print(query_string('de', ['dog', 'deer', 'deal']))
+
+
+def climb_stairs(n):
+    """
+    There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time.
+    Given N, write a function that returns the number of unique ways you can climb the staircase.
+    The order of the steps matters.
+
+    For example, if N is 4, then there are 5 unique ways:
+    1, 1, 1, 1
+    2, 1, 1
+    1, 2, 1
+    1, 1, 2
+    2, 2
+
+    What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number
+    from a set of positive integers X? For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
+    :param n: positive int, a staircase with N steps
+    :return: an int
+    """
+    if n == 0:
+        return 1
+
+    res = climb_stairs(n - 1)
+
+    if n >= 2:
+        res += climb_stairs(n - 2)
+
+    return res
+
+
+# print(climb_stairs(0))
+
+
+def climb_any_stair(N, st):
+    """
+    see the above function
+    :param n: positive int, a staircase with N steps
+    :param st: a set of positive integers
+    :return: an int
+    """
+    def base(n):
+        if n == 0:
+            return 1
+
+        res = 0
+
+        for i in st:
+            if i == 1:
+                res = base(n - 1)
+            elif n >= i:
+                res += base(n - i)
+            else:
+                res = 1     # there's something not right for this line or the above
+        return res
+
+    return base(N)
+
+
+print(climb_any_stair(6, {2, 3}))
+
+"""
+The area of a circle is defined as πr^2. Estimate π to 3 decimal places using a Monte Carlo method.
+
+Hint: The basic equation of a circle is x2 + y2 = r2.
+"""
+import math
+
+r = 10000       # make a circle with a radius of 10000 unit length
+
+# only consider the points of positive x and y
+coordinates = [(x, math.floor((10000**2 - x**2)**0.5)) for x in range(0, 10001)]
+
+guessed_area = 4 * sum(token[1] for token in coordinates)
+
+guessed_pi = guessed_area / 10000**2
+
+"""
+Given a stream of elements too large to store in memory,
+pick a random element from the stream with uniform probability.
+
+https://en.wikipedia.org/wiki/Reservoir_sampling
+"""
 

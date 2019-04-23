@@ -1,18 +1,8 @@
-# from decorators import timer, debug, job_schedule
+"""
+You run an e-commerce website and want to record the last N order ids in a log. Implement a data structure to accomplish this, with the following API:
 
-def query_string(string, target):
-    """
-    Implement an autocomplete system. That is, given a query string s and a set of all possible query strings,
-    return all strings in the set that have s as a prefix.
-    For example, given the query string de and the set of strings [dog, deer, deal], return [deer, deal].
-    Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
-    Can I assume case sensitivity?
-    :param string: str (e.g. 'de')
-    :param target: list of strings (e.g. [dog, deer, deal])
-    :return: list of strings
-    """
-    return list(filter(lambda x: x.startswith(string), target))
+record(order_id): adds the order_id to the log
+get_last(i): gets the ith last element from the log. i is guaranteed to be smaller than or equal to N.
 
-
-print(query_string('de', ['dog', 'deer', 'deal']))
-
+You should be as efficient with time and space as possible.
+"""
