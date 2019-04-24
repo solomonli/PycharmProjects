@@ -1,12 +1,26 @@
-"""
-You run an e-commerce website and want to record the last N order ids in a log.
-Implement a data structure to accomplish this, with the following API:
+class orderlog:
+    """
+    You run an e-commerce website and want to record the last N order ids in a log.
+    Implement a data structure to accomplish this, with the following API:
 
-record(order_id): adds the order_id to the log
-get_last(i): gets the ith last element from the log. i is guaranteed to be smaller than or equal to N.
+    record(order_id): adds the order_id to the log
+    get_last(i): gets the ith last element from the log. i is guaranteed to be smaller than or equal to N.
 
-You should be as efficient with time and space as possible.
-"""
+    You should be as efficient with time and space as possible.
+    """
+    def __init__(self, num):
+        self.container = [None] * num
+        self.current_index = len(self.container)
+
+    def record(self, order_id):
+        self.container.append(order_id)
+        return f'The Order ID {order_id} has been added to the log.'
+
+    def get_last(self, i):
+        if i > self.current_index:
+            print(f'The whole log returned since the number {i} outsized the log length {self.current_index}.')
+        return self.container[-i:]
+
 """
 Suppose we represent our file system by a string in the following manner:
 
@@ -46,3 +60,4 @@ Note:
 The name of a file contains at least a period and an extension.
 The name of a directory or sub-directory will not contain a period.
 """
+
