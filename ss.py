@@ -21,6 +21,12 @@ class orderlog:
             print(f'The whole log returned since the number {i} outsized the log length {self.current_index}.')
         return self.container[-i:]
 
+
+my_log = orderlog(5)
+print(my_log.record(7))
+print(my_log.get_last(3))
+print(my_log.get_last(10))
+
 """
 Suppose we represent our file system by a string in the following manner:
 
