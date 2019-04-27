@@ -102,7 +102,7 @@ def house_color(matrix, color_names='ROYGBIV'):
     A builder is looking to build a row of N houses that can be of K different colors.
     He has a goal of minimizing cost while ensuring that no two neighboring houses are of the same color.
 
-    Given an N * K matrix where the Nth row and Kth column represents the cost to build the Nth house with Kth color,
+    Given an N * K matrix where the Nth row and Kth column represents the cost - matrix[house][color]
     return the minimum cost which achieves this goal.
     :param matrix: a N-length list, with each token of K-length list
     :param color_names: a string sequence containing the names of the colors
@@ -120,24 +120,23 @@ def house_color(matrix, color_names='ROYGBIV'):
     totals[0] = matrix[0][:]
 
     # After the first house, dynamic programming does its magic.
-    # At each step, add the price of painting this house
-    # to the minimum of the total painting of the other colors.
-    for i in range(num_houses):
-        totals[i] = [
-            matrix[i][j] +
-            min(totals[i][c] for c in range(num_colors) if c != j) for j in range(num_colors)
-        ]
+    # At each step, add the price of painting this house to the minimum of the total painting of the other colors.
+    for house in range(1, num_houses):
+        totals[house] = [matrix[house][color] +
+                         min(totals[house - 1][c] for c in range(num_colors) if c != color)
+                         for color in range(num_colors)]
+
 
     # Now we have the totals to paint up to each house.
     # We'll just work backwards to find the coloring of the houses.
     colorings = [None] * num_houses
     colorings[-1] = min(range(num_colors), key=lambda c: totals[-1][c])
+
     for house in range(num_houses - 2, -1, -1):
-        # Take the index of the cheapest option (infinite cost
-        # prohibits consecutive houses with the same color)
+    # Take the index of the cheapest option (infinite cost prohibits consecutive houses with the same color)
         colorings[house] = min(range(num_colors),
                                key=lambda c: totals[house][c] if c != colorings[house + 1]
-                               else float('Infinity'))
+                               else float('Inf'))
 
     # Convert color indexes to names
     return [color_names[colorings[house]] for house in range(num_houses)]

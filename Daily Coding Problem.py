@@ -298,7 +298,7 @@ def decode_count(string):
         :param k: an integer, the last K digits of sub_string
         :return: an int
         """
-        if k == 0:
+        if not k:
             return 1
 
         s = len(sub_string) - k
@@ -327,7 +327,7 @@ def decode_count_dp(string):
 
 def base_count_dp(sub_string, k, memo):
 
-    if k == 0:
+    if not k:
         return 1
 
     s = len(sub_string) - k
@@ -681,7 +681,7 @@ def climb_stairs(n):
     :param n: positive int, a staircase with N steps
     :return: an int
     """
-    if n == 0:
+    if not n:
         return 1
 
     res = climb_stairs(n - 1)
@@ -703,7 +703,7 @@ def climb_any_stair(N, st):
     :return: an int
     """
     def base(n):
-        if n == 0:
+        if not n:
             return 1
 
         res = 0
