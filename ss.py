@@ -13,60 +13,97 @@ def word_break(text, dictionary):
     :param dictionary: a list of strings
     :return: a list of strings
     """
-    # for element in lst:
-    #     if element not in text:
-    #         lst.remove(element)
-    #
-    # return lst
-    res = []
+    if len(text) == 1 or 0:
+        return None
 
     for i in range(1, len(text)):
         if text[:i] in dictionary:
            # res.append(text[:i])
            print(text[:i])
-           sub_text = text[i+1:]
+           text = text[i+1:]
+        else:
+            break
 
-    return word_break(sub_text, dictionary)
-
+    return word_break(text, dictionary)
 
 
 print(word_break("bedbathandbeyond", ['bed', 'bath', 'bedbath', 'and', 'beyond']))
 
 
-
+"""
+public class Solution {
+    public boolean wordBreak(String s, Set<String> dict) {
+        boolean[] t = new boolean[s.length()+1];
+        t[0] = true; //set first to be true, why?
+        //Because we need initial state
+ 
+        for(int i=0; i<s.length(); i++){
+            //should continue from match position
+            if(!t[i]) 
+                continue;
+ 
+            for(String a: dict){
+                int len = a.length();
+                int end = i + len;
+                if(end > s.length())
+                    continue;
+ 
+                if(t[end]) continue;
+ 
+                if(s.substring(i, end).equals(a)){
+                    t[end] = true;
+                }
+            }
+        }
+ 
+        return t[s.length()];
+    }
+}
+"""
 
 """
-table = {}
-
-def wordBreak(s, dict):
-
-    if len(s) == 0:
-
-        return True
-
-    if len(s) == 1:
-
-        return s in dict
-
-    if s in table:
-
-        return list[s]
-
-    isBreakable = False
-
-    for i in range(len(s)):
-
-        word = s[: i+1]
-
-        if word in dict:
-
-            subFlag = wordBreak(s[i + 1: ], dict)
-
-        if s[i + 1: ] not in table:
-
-            table[s[i + 1: ]] = subFlag
-
-            isBreakable |= subFlag
-
-    return isBreakable
+public boolean wordBreak(String s, Set<String> wordDict) {
+    int[] pos = new int[s.length()+1];
+ 
+    Arrays.fill(pos, -1);
+ 
+    pos[0]=0;
+ 
+    for(int i=0; i<s.length(); i++){
+        if(pos[i]!=-1){
+            for(int j=i+1; j<=s.length(); j++){
+                String sub = s.substring(i, j);
+                if(wordDict.contains(sub)){
+                    pos[j]=i;
+                }
+            } 
+        }
+    }
+ 
+    return pos[s.length()]!=-1;
+}
 """
+
+
+
+
+def tiles(matrix):
+    """
+    You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall.
+    Each False boolean represents a tile you can walk on.
+
+    Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps required
+    to reach the end coordinate from the start. If there is no possible path, then return null.
+    You can move up, left, down, and right. You cannot move through walls. You cannot wrap around the edges of the board.
+
+    For example, given the following board:
+    [[f, f, f, f],
+    [t, t, f, t],
+    [f, f, f, f],
+    [f, f, f, f]]
+
+    and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps required
+    to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
+    :param matrix: a list of lists containing booleans
+    :return: an integer
+    """
