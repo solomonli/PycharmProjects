@@ -477,8 +477,8 @@ print(sum(s))
 
 list(enumerate(['R', 'a', 'n', 'k']))
 
-s1 | s2; s1 & s2; s1 - s2; s1.difference(s2); s1 ^ s2; s1.symmetric_difference(s2)
-
+# s1 | s2; s1 & s2; s1 - s2; s1.difference(s2); s1 ^ s2; s1.symmetric_difference(s2)
+# https://docs.python.org/3.7/library/stdtypes.html#set-types-set-frozenset
 """
 .update() or |= 
 .intersection_update() or &=
