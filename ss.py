@@ -132,6 +132,7 @@ def coding_problem_29(text):
                 idx += 1
 
             encoded += str(idx) + text[0]
+
             text = text[idx:]
 
         return encoded
