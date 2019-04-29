@@ -25,7 +25,7 @@ def wall_tile(matrix, start, end):
     if max(start[0], end[0]) > num_row - 1 or max(start[1], end[1]) > num_column - 1:
         return 'The start or end point is out of boundary!'
 
-    grid = [[(i, j) for j in range(num_column)] for i in range(num_row)]
+    board = [[(i, j) for j in range(num_column)] for i in range(num_row)]
 
 """
 Implement locking in a binary tree. A binary tree node can be locked or 
@@ -109,7 +109,7 @@ you should return the following:
 "the   lazy   dog"] # 4 extra spaces distributed evenly
 """
 
-def run_length_encode(string):
+def coding_problem_29(text):
     """
     Run-length encoding is a fast and simple method of encoding strings.
     The basic idea is to represent repeated successive characters as a single count and character.
@@ -117,25 +117,27 @@ def run_length_encode(string):
 
     Implement run-length encoding and decoding. You can assume the string to be encoded have no digits
     and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
-    :param string: a string
+    :param text: a string
     :return: a string
     """
-    tmp = string[0]
+    if text.isalpha():  # no numbers, encode
 
-    res = ''
+        encoded = ''
 
-    for i in range(1, len(string)):
-        while string[i] == tmp:
-            tmp = string[i]
-            j = i
-        res += 'i - 0 + 1'\
-        res += tmp
+        while text:
 
+            idx = 0
 
+            while idx < len(text) and text[0] == text[idx]:
+                idx += 1
 
+            encoded += str(idx) + text[0]
+            text = text[idx:]
 
+        return encoded
 
-def run_length_decode(string):
+    else:  # decode
 
+        return ''.join(c * int(n) for n, c in zip(text[::2], text[1::2]))
 
-assert run_length_decode(run_length_encode('AAAABBBCCDAA')) == 'AAAABBBCCDAA'
+    print(coding_problem_29('AAABBBFFFFFFFDDDDD'))
