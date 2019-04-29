@@ -1,93 +1,4 @@
-def word_break(text, dictionary):
-    """
-    Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.
-    If there is more than one possible reconstruction, return any of them.
-    If there is no possible reconstruction, then return null.
-
-    For example, given the set of words 'quick', 'brown', 'the', 'fox', and the string "thequickbrownfox",
-    you should return ['the', 'quick', 'brown', 'fox'].
-
-    Given the set of words 'bed', 'bath', 'bedbath', 'and', 'beyond', and the string "bedbathandbeyond",
-    return either ['bed', 'bath', 'and', 'beyond] or ['bedbath', 'and', 'beyond'].
-    :param text: a string of letters, without space
-    :param dictionary: a list of strings
-    :return: a list of strings
-    """
-    if len(text) == 1 or 0:
-        return None
-
-    for i in range(1, len(text)):
-        if text[:i] in dictionary:
-           # res.append(text[:i])
-           print(text[:i])
-           text = text[i+1:]
-        else:
-            break
-
-    return word_break(text, dictionary)
-
-
-print(word_break("bedbathandbeyond", ['bed', 'bath', 'bedbath', 'and', 'beyond']))
-
-
-"""
-public class Solution {
-    public boolean wordBreak(String s, Set<String> dict) {
-        boolean[] t = new boolean[s.length()+1];
-        t[0] = true; //set first to be true, why?
-        //Because we need initial state
- 
-        for(int i=0; i<s.length(); i++){
-            //should continue from match position
-            if(!t[i]) 
-                continue;
- 
-            for(String a: dict){
-                int len = a.length();
-                int end = i + len;
-                if(end > s.length())
-                    continue;
- 
-                if(t[end]) continue;
- 
-                if(s.substring(i, end).equals(a)){
-                    t[end] = true;
-                }
-            }
-        }
- 
-        return t[s.length()];
-    }
-}
-"""
-
-"""
-public boolean wordBreak(String s, Set<String> wordDict) {
-    int[] pos = new int[s.length()+1];
- 
-    Arrays.fill(pos, -1);
- 
-    pos[0]=0;
- 
-    for(int i=0; i<s.length(); i++){
-        if(pos[i]!=-1){
-            for(int j=i+1; j<=s.length(); j++){
-                String sub = s.substring(i, j);
-                if(wordDict.contains(sub)){
-                    pos[j]=i;
-                }
-            } 
-        }
-    }
- 
-    return pos[s.length()]!=-1;
-}
-"""
-
-
-
-
-def tiles(matrix):
+def wall_tile(matrix, start, end):
     """
     You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall.
     Each False boolean represents a tile you can walk on.
@@ -105,5 +16,126 @@ def tiles(matrix):
     and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps required
     to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
     :param matrix: a list of lists containing booleans
+    :param start: a tuple of two integers - zero-based indices
+    :param end: a tuple of two integers - zero-based indices
     :return: an integer
     """
+    num_row, num_column = len(matrix), len(matrix[0])
+
+    if max(start[0], end[0]) > num_row - 1 or max(start[1], end[1]) > num_column - 1:
+        return 'The start or end point is out of boundary!'
+
+    grid = [[(i, j) for j in range(num_column)] for i in range(num_row)]
+
+"""
+Implement locking in a binary tree. A binary tree node can be locked or 
+unlocked only if all of its descendants or ancestors are not locked.
+
+Design a binary tree node class with the following methods:
+
+    is_locked, which returns whether the node is locked
+    lock, which attempts to lock the node. If it cannot be locked, then it should return false. Otherwise, it should lock it and return true.
+    unlock, which unlocks the node. If it cannot be unlocked, then it should return false. Otherwise, it should unlock it and return true.
+
+You may augment the node to add parent pointers or any other property you would like. 
+You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. 
+Each method should run in O(h), where h is the height of the tree.
+"""
+
+
+def reg_exp(string):
+    """
+    Implement regular expression matching with the following special characters:
+
+    . (period) which matches any single character
+    * (asterisk) which matches zero or more of the preceding element
+
+    That is, implement a function that takes in a string and a valid regular expression
+    and returns whether or not the string matches the regular expression.
+
+    For example, given the regular expression "ra." and the string "ray", your function should return true.
+    The same regular expression on the string "raymond" should return false.
+
+    Given the regular expression ".*at" and the string "chat", your function should return true.
+    The same regular expression on the string "chats" should return false.
+    :param string: a string containing '.', '*', or both
+    :return: a boolean
+    """
+
+
+def remove_item(lst, k):
+    """
+    Given a singly linked list and an integer k, remove the kth last element from the list.
+    k is guaranteed to be smaller than the length of the list.
+
+    The list is very long, so making more than one pass is prohibitively expensive.
+
+    Do this in constant space and in one pass.
+    :param lst: a list
+    :param k: an integer
+    :return: the processed the list
+    """
+    # Use fast and slow pointers. The fast pointer is n steps ahead of the slow pointer.
+    # When the fast reaches the end, the slow pointer points at the previous element of the target element.
+    # while (fast.next != null) in Java ???
+    fast =
+
+"""
+Given a string of round, curly, and square open and closing brackets, 
+return whether the brackets are balanced (well-formed).
+
+For example, given the string "([])[]({})", you should return true.
+
+Given the string "([)]" or "((()", you should return false.
+"""
+
+"""
+Write an algorithm to justify text. Given a sequence of words and an integer line length k, 
+return a list of strings which represents each line, fully justified.
+
+More specifically, you should have as many words as possible in each line. 
+There should be at least one space between each word. Pad extra spaces when necessary so that each line has exactly length k. 
+Spaces should be distributed as equally as possible, with the extra spaces, if any, distributed starting from the left.
+
+If you can only fit one word on a line, then you should pad the right-hand side with spaces.
+
+Each word is guaranteed not to be longer than k.
+
+For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16, 
+you should return the following:
+
+["the  quick brown", # 1 extra space on the left
+"fox  jumps  over", # 2 extra spaces distributed evenly
+"the   lazy   dog"] # 4 extra spaces distributed evenly
+"""
+
+def run_length_encode(string):
+    """
+    Run-length encoding is a fast and simple method of encoding strings.
+    The basic idea is to represent repeated successive characters as a single count and character.
+    For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A".
+
+    Implement run-length encoding and decoding. You can assume the string to be encoded have no digits
+    and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
+    :param string: a string
+    :return: a string
+    """
+    tmp = string[0]
+
+    res = ''
+
+    for i in range(1, len(string)):
+        while string[i] == tmp:
+            tmp = string[i]
+            j = i
+        res += 'i - 0 + 1'\
+        res += tmp
+
+
+
+
+
+def run_length_decode(string):
+
+
+assert run_length_decode(run_length_encode('AAAABBBCCDAA')) == 'AAAABBBCCDAA'

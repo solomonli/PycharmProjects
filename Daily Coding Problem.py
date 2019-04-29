@@ -926,7 +926,41 @@ def overlapping(a, b):
 print(classroom([(30, 75), (0, 50), (60, 150)]))
 
 
+def word_break(text, dictionary):
+    """
+    Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.
+    If there is more than one possible reconstruction, return any of them.
+    If there is no possible reconstruction, then return null.
 
+    For example, given the set of words 'quick', 'brown', 'the', 'fox', and the string "thequickbrownfox",
+    you should return ['the', 'quick', 'brown', 'fox'].
+
+    Given the set of words 'bed', 'bath', 'bedbath', 'and', 'beyond', and the string "bedbathandbeyond",
+    return either ['bed', 'bath', 'and', 'beyond] or ['bedbath', 'and', 'beyond'].
+    :param text: a string of letters, without space
+    :param dictionary: a list of strings
+    :return: a list of strings
+    """
+    if not text or not dictionary:
+        return [None]
+
+    words = set(dictionary)
+    memo = list()
+
+    for i in range(len(text)+1):
+        if text[:i] in words:
+            memo.append(text[:i])       # append the found match
+            words.remove(text[:i])      # shrink the dictionary
+            memo += word_break(text[i:], words)         # repeat the process on the truncated text and shrunk dict
+            # and append to MEMO
+            break       # once A match is found, BREAK the loop!
+
+    return memo
+
+
+print(word_break("bedbathandbeyond", ['bed', 'bath', 'bedbath', 'and', 'beyond']))
+assert word_break("thequickbrownfox", ['quick', 'brown', 'the', 'fox']) == ['the', 'quick', 'brown', 'fox']
+assert word_break("bedbathandbeyond", ['bed', 'bath', 'bedbath', 'and', 'beyond']) == ['bed', 'bath', 'and', 'beyond']
 
 
 
