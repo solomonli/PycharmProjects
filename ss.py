@@ -78,7 +78,7 @@ def remove_item(lst, k):
     # Use fast and slow pointers. The fast pointer is n steps ahead of the slow pointer.
     # When the fast reaches the end, the slow pointer points at the previous element of the target element.
     # while (fast.next != null) in Java ???
-    fast =
+    # fast =
 
 """
 Given a string of round, curly, and square open and closing brackets, 
@@ -123,10 +123,10 @@ def coding_problem_29(text):
     if text.isalpha():  # no numbers, encode
 
         encoded = ''
-
+        # idx = 0
         while text:
 
-            idx = 0
+            idx = 0     # the beauty lies here too: you dont need the other two idx = 0
 
             while idx < len(text) and text[0] == text[idx]:
                 idx += 1
@@ -134,11 +134,12 @@ def coding_problem_29(text):
             encoded += str(idx) + text[0]
 
             text = text[idx:]
-
+            # idx = 0
         return encoded
 
     else:  # decode
 
         return ''.join(c * int(n) for n, c in zip(text[::2], text[1::2]))
 
-    print(coding_problem_29('AAABBBFFFFFFFDDDDD'))
+
+print(coding_problem_29('AAABBBFFFFFFFDDDDD'))
