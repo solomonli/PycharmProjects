@@ -16,3 +16,14 @@ def count_same(text):
 print(run_length_encode('AABBCCCDD'))
 """
 
+def problem_1(lst):
+
+    res = []
+
+    for a, b in zip([*range(0, len(lst), 2)], [*range(-1, -len(lst), -2)]):
+        res.append(lst[a])
+        res.append(lst[b])
+
+    return res
+
+print(problem_1([1,2,3,4,5,6]))
