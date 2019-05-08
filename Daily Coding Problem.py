@@ -719,6 +719,21 @@ def climb_any_stair(N, st):
 
     return base(N)
 
+############################################
+
+    if N == 0:
+        return 1  # leaf case
+
+    available_choices = [c for c in st if c <= N]
+    if not available_choices:
+        return 0  # unfeasible
+
+    count = 0
+    for c in available_choices:
+        count += climb_any_stair(N - c, st)
+
+    return count
+
 
 print(climb_any_stair(6, {2, 3}))
 
