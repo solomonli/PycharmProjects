@@ -143,3 +143,41 @@ def coding_problem_29(text):
 
 
 print(coding_problem_29('AAABBBFFFFFFFDDDDD'))
+
+import json, pprint
+
+x = """{
+  "data": {
+    "translations": [
+      {
+        "translatedText": "THE PUBLIC GOOD the despatches For Obama, the mustard is from Dijon",
+        "detectedSourceLanguage": "fr"
+      }
+    ]
+  }
+}"""
+
+y = json.loads(x)
+
+pprint.pprint(y)
+
+
+"""def run_length_encode(string):
+    res = ''
+
+    for i in range(len(string)):
+        if string[i] != string[i+1]:
+            res += count_same(string[:i+1])
+            string = string[i+1:]
+            res += run_length_encode(string)
+            break
+
+    return res
+
+def count_same(text):
+    return str(len(text)) + text[0]
+
+print(run_length_encode('AABBCCCDD'))
+"""
+
+
