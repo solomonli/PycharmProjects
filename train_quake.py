@@ -12,31 +12,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import LabelBinarizer
 
 # Define the format of your input data including unused columns (These are the columns from the census data files)
-COLUMNS = (
-    'age',
-    'workclass',
-    'fnlwgt',
-    'education',
-    'education-num',
-    'marital-status',
-    'occupation',
-    'relationship',
-    'race',
-    'sex',
-    'capital-gain',
-    'capital-loss',
-    'hours-per-week',
-    'native-country',
-    'income-level'
-)
-
-"""
-39, State-gov, 77516, Bachelors, 13, Never-married, Adm-clerical, Not-in-family, White, Male, 2174, 0, 40, United-States, <=50K
-50, Self-emp-not-inc, 83311, Bachelors, 13, Married-civ-spouse, Exec-managerial, Husband, White, Male, 0, 0, 13, United-States, <=50K
-38, Private, 215646, HS-grad, 9, Divorced, Handlers-cleaners, Not-in-family, White, Male, 0, 0, 40, United-States, <=50K
-52, Self-emp-not-inc, 209642, HS-grad, 9, Married-civ-spouse, Exec-managerial, Husband, White, Male, 0, 0, 45, United-States, >50K
-"""
-
+# The first column is the LABEL which is n/a in the values.csv
 columns = ('damage_grade',
            'building_id',
            'geo_level_1_id', 'geo_level_2_id', 'geo_level_3_id',
@@ -77,18 +53,7 @@ columns = ('damage_grade',
            'has_secondary_use_other'
 )
 
-# Categorical columns are columns that need to be turned into a numerical value to be used by scikit-learn
-CATEGORICAL_COLUMNS = (
-    'workclass',
-    'education',
-    'marital-status',
-    'occupation',
-    'relationship',
-    'race',
-    'sex',
-    'native-country'
-)
-
+# Categorical columns need to be turned into a numerical value to be used by scikit-learn
 
 numeric_columns = (
     'geo_level_1_id',
@@ -103,38 +68,19 @@ numeric_columns = (
 
 
 # Load the training census dataset
-with open('./census_data/adult.data', 'r') as train_data:
-    raw_training_data = pd.read_csv(train_data, header=None, names=COLUMNS)
+with open('./earthquake_data/train_values.csv', 'r') as train_feature:
+    raw_training_values = pd.read_csv(train_feature, header=None, names=columns[1:])
+train_values = raw_training_values.to_numpy().tolist()
 
-# with open('gs://xxx/train_values.csv', 'r') as train_feature:
-#     raw_training_values = pd.read_csv(train_feature, header=None, names=columns[1:])
-# train_values = raw_training_values.to_numpy().tolist()
-#
-# with open('gs://xxx/train_labels.csv', 'r') as train_label:
-#     raw_training_labels = pd.read_csv(train_label, header=None, names=('building_id','damage_grade'))
-# train_labels = raw_training_labels['damage_grade'].to_numpy().tolist()
-
-
-# Remove the column we are trying to predict ('income-level') from our features list
-# Convert the Dataframe to a lists of lists
-train_features = raw_training_data.drop('income-level', axis=1).to_numpy().tolist()
-# Create our training labels list, convert the Dataframe to a lists of lists
-train_labels = (raw_training_data['income-level'] == ' >50K').to_numpy().tolist()
+with open('./earthquake_data/train_labels.csv', 'r') as train_label:
+    raw_training_labels = pd.read_csv(train_label, header=None, names=('building_id', 'damage_grade'))
+train_labels = raw_training_labels['damage_grade'].to_numpy().tolist()
 
 
 # Load the test census dataset
-with open('./census_data/adult.test', 'r') as test_data:
-    raw_testing_data = pd.read_csv(test_data, names=COLUMNS, skiprows=1)
-# Remove the column we are trying to predict ('income-level') from our features list
-# Convert the Dataframe to a lists of lists
-test_features = raw_testing_data.drop('income-level', axis=1).as_matrix().tolist()
-# Create our training labels list, convert the Dataframe to a lists of lists
-test_labels = (raw_testing_data['income-level'] == ' >50K.').as_matrix().tolist()
-
-
-# with open('./Pure_Python/PycharmProjects/test_values.csv', 'r') as test_value:
-#     raw_test_values = pd.read_csv(test_value, header=None, names=columns[1:])
-# test_values = raw_test_values.to_numpy().tolist()
+with open('./earthquake_data//test_values.csv', 'r') as test_value:
+    raw_test_values = pd.read_csv(test_value, header=None, names=columns[1:])
+test_values = raw_test_values.to_numpy().tolist()
 
 
 # Since the census data set has categorical features, we need to convert them to numerical values.
@@ -147,35 +93,6 @@ categorical_pipelines = []
 # SelectKBest(k=1) and a LabelBinarizer() to convert the categorical value to a numerical one.
 # A scores array (created below) will select and extract the feature column. The scores array is
 # created by iterating over the COLUMNS and checking if it is a CATEGORICAL_COLUMN.
-for i, col in enumerate(COLUMNS[:-1]):
-    if col in CATEGORICAL_COLUMNS:
-        # Create a scores array to get the individual categorical column.
-        # Example:
-        #  data = [39, 'State-gov', 77516, 'Bachelors', 13, 'Never-married', 'Adm-clerical',
-        #         'Not-in-family', 'White', 'Male', 2174, 0, 40, 'United-States']
-        #  scores = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        #
-        # Returns: [['Sate-gov']]
-        scores = []
-        # Build the scores array
-        for j in range(len(COLUMNS[:-1])):
-            if i == j: # This column is the categorical column we want to extract.
-                scores.append(1) # Set to 1 to select this column
-            else: # Every other column should be ignored.
-                scores.append(0)
-        skb = SelectKBest(k=1)
-        skb.scores_ = scores
-        # Convert the categorical column to a numerical value
-        lbn = LabelBinarizer()
-        r = skb.transform(train_features)
-        lbn.fit(r)
-        # Create the pipeline to extract the categorical feature
-        categorical_pipelines.append(
-            ('categorical-{}'.format(i), Pipeline([
-                ('SKB-{}'.format(i), skb),
-                ('LBN-{}'.format(i), lbn)])))
-
-"""
 for i, col in enumerate(columns[1:]):
     if col not in numeric_columns:
         # Create a scores array to get the individual categorical column.
@@ -203,19 +120,17 @@ for i, col in enumerate(columns[1:]):
             ('categorical-{}'.format(i), Pipeline([
                 ('SKB-{}'.format(i), skb),
                 ('LBN-{}'.format(i), lbn)])))
-"""
 
 
 # Create pipeline to extract the numerical features
-skb = SelectKBest(k=6)
-# skb = SelectKBest(k=len(numeric_columns))
+skb = SelectKBest(k=len(numeric_columns))
+
 # From COLUMNS use the features that are numerical
-skb.scores_ = [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0]
-# skb.scores_ = [0, 1, 1, 1, 1, 1, 1, 1, 0, 0,
-#                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-#                0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-#                0, 0, 0, 0, 0, 0, 0, 0, 0
-#                ]
+skb.scores_ = [0, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0, 0
+               ]
 categorical_pipelines.append(('numerical', skb))
 
 # Combine all the features using FeatureUnion
@@ -225,7 +140,7 @@ preprocess = FeatureUnion(categorical_pipelines)
 classifier = RandomForestClassifier()
 
 # Transform the features and fit them to the classifier
-classifier.fit(preprocess.transform(train_features), train_labels)
+classifier.fit(preprocess.transform(train_values[1:]), train_labels[1:])
 
 # Create the overall model as a single pipeline
 pipeline = Pipeline([
@@ -234,7 +149,7 @@ pipeline = Pipeline([
 ])
 
 # Export the model to a file
-joblib.dump(pipeline, 'model.joblib')
+joblib.dump(pipeline, 'model_quake.joblib')
 
 print('Model trained and saved')
 
