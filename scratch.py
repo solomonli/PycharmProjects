@@ -53,3 +53,13 @@ if __name__ == '__main()__':
     c.temperature = -332
     print(c.temperature)
     print(c.__temperature)
+
+
+export PROJECT_ID=spatial-range-235523
+export MODEL_PATH=gs://ai_platform_output
+export MODEL_NAME=quake
+export VERSION_NAME=v1
+export REGION=us-central1
+
+gsutil cp gs://dataprep-staging-2a3e2ace-5f3b-4ea7-8329-25547cdcd64b/starcraft2@protonmail.com/clean_slate/train_labels_clean.csv
+./earthquake_data

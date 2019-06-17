@@ -54,7 +54,6 @@ columns = ('damage_grade',
 )
 
 # Categorical columns need to be turned into a numerical value to be used by scikit-learn
-
 numeric_columns = (
     'geo_level_1_id',
     'geo_level_2_id',
@@ -68,19 +67,61 @@ numeric_columns = (
 
 
 # Load the training census dataset
-with open('./earthquake_data/train_values.csv', 'r') as train_feature:
-    raw_training_values = pd.read_csv(train_feature, header=None, names=columns[1:])
-train_values = raw_training_values.to_numpy().tolist()
+with open('./earthquake_data/train_values_clean.csv', 'r') as train_feature:
+    raw_training_values = pd.read_csv(train_feature, header=None, names=columns[1:],
+    dtype={'building_id': str,
+           'geo_level_1_id': int, 'geo_level_2_id': int, 'geo_level_3_id': int,
+           'count_floors_pre_eq': int,
+           'age': int,
+           'area_percentage': int,
+           'height_percentage': int,
+           'land_surface_condition': str,
+           'foundation_type': str,
+           'roof_type': str,
+           'ground_floor_type': str,
+           'other_floor_type': str,
+           'position': str,
+           'plan_configuration': str,
+           'has_superstructure_adobe_mud': str,
+           'has_superstructure_mud_mortar_stone': str,
+           'has_superstructure_stone_flag': str,
+           'has_superstructure_cement_mortar_stone': str,
+           'has_superstructure_mud_mortar_brick': str,
+           'has_superstructure_cement_mortar_brick': str,
+           'has_superstructure_timber': str,
+           'has_superstructure_bamboo': str,
+           'has_superstructure_rc_non_engineered': str,
+           'has_superstructure_rc_engineered': str,
+           'has_superstructure_other': str,
+           'legal_ownership_status': str,
+           'count_families': int,
+           'has_secondary_use': str,
+           'has_secondary_use_agriculture': str,
+           'has_secondary_use_hotel': str,
+           'has_secondary_use_rental': str,
+           'has_secondary_use_institution': str,
+           'has_secondary_use_school': str,
+           'has_secondary_use_industry': str,
+           'has_secondary_use_health_post': str,
+           'has_secondary_use_gov_office': str,
+           'has_secondary_use_use_police': str,
+           'has_secondary_use_other': str
+           })
+train_values = raw_training_values.as_matrix().tolist()
 
-with open('./earthquake_data/train_labels.csv', 'r') as train_label:
-    raw_training_labels = pd.read_csv(train_label, header=None, names=('building_id', 'damage_grade'))
-train_labels = raw_training_labels['damage_grade'].to_numpy().tolist()
+
+with open('./earthquake_data/train_labels_clean.csv', 'r') as train_label:
+    raw_training_labels = pd.read_csv(train_label, header=None, names=('building_id', 'damage_grade'),
+                                      dtype={'building_id': str,
+                                             'damage_grade': str,
+                                             })
+train_labels = raw_training_labels['damage_grade'].as_matrix().tolist()
 
 
 # Load the test census dataset
-with open('./earthquake_data//test_values.csv', 'r') as test_value:
-    raw_test_values = pd.read_csv(test_value, header=None, names=columns[1:])
-test_values = raw_test_values.to_numpy().tolist()
+# with open('./earthquake_data//test_values.csv', 'r') as test_value:
+#     raw_test_values = pd.read_csv(test_value, header=None, names=columns[1:])
+# test_values = raw_test_values.to_numpy().tolist()
 
 
 # Since the census data set has categorical features, we need to convert them to numerical values.
@@ -113,7 +154,7 @@ for i, col in enumerate(columns[1:]):
         skb.scores_ = scores
         # Convert the categorical column to a numerical value
         lbn = LabelBinarizer()
-        r = skb.transform(train_values[1:])
+        r = skb.transform(train_values)
         lbn.fit(r)
         # Create the pipeline to extract the categorical feature
         categorical_pipelines.append(
@@ -123,7 +164,7 @@ for i, col in enumerate(columns[1:]):
 
 
 # Create pipeline to extract the numerical features
-skb = SelectKBest(k=len(numeric_columns))
+skb = SelectKBest(8)
 
 # From COLUMNS use the features that are numerical
 skb.scores_ = [0, 1, 1, 1, 1, 1, 1, 1, 0, 0,
@@ -140,7 +181,7 @@ preprocess = FeatureUnion(categorical_pipelines)
 classifier = RandomForestClassifier()
 
 # Transform the features and fit them to the classifier
-classifier.fit(preprocess.transform(train_values[1:]), train_labels[1:])
+classifier.fit(preprocess.transform(train_values), train_labels)
 
 # Create the overall model as a single pipeline
 pipeline = Pipeline([
