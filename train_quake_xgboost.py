@@ -5,10 +5,32 @@ import subprocess
 from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 from google.cloud import storage
+import cloudstorage as gcs
 import xgboost as xgb
 # TODO: REPLACE 'BUCKET_CREATED_ABOVE' with your GCS BUCKET_ID
-BUCKET_ID = 'ai_platform_output'
+BUCKET_ID = 'spatial-range-235523-mlengine'
 # [END setup]
+
+# ---------------------------------------
+# 1. Add code to download the data from GCS (in this case, using the publicly hosted data).
+# AI Platform will then be able to use the data when training your model.
+# ---------------------------------------
+
+"""
+# [START download-data]
+earthquake_data_filename = 'train_all_columns_wo_boolean.csv'
+# "Public" bucket holding the earthquake data
+bucket = storage.Client().bucket('dataprep-staging-2a3e2ace-5f3b-4ea7-8329-25547cdcd64b')
+# Path to the data inside the public bucket
+data_dir = '/starcraft2@protonmail.com/clean_slate/'
+# Download the data
+blob = bucket.blob(''.join([data_dir, earthquake_data_filename]))
+blob.download_to_filename(earthquake_data_filename)
+# [END download-data]
+"""
+
+gcs_file = gcs.open('gs://dataprep-staging-2a3e2ace-5f3b-4ea7-8329-25547cdcd64b/starcraft2@protonmail.com/clean_slate/train_all_columns_wo_boolean.csv')
+contents = gcs_file.read()
 
 
 # [START define-and-load-data]
@@ -70,7 +92,7 @@ CATEGORICAL_COLUMNS = COLUMNS - NUMERICAL_COLUMNS - {'damage_grade'}
 
 
 # Load the training quake datasets
-with open('./earthquake_data/train_all_columns_wo_boolean.csv', 'r') as train_data:
+with open(contents, 'r') as train_data:
     raw_training_data = pd.read_csv(train_data, header=None, names=COLUMNS)
 # remove column we are trying to predict ('income-level') from features list
 train_features = raw_training_data.drop('damage_grade', axis=1)
@@ -78,6 +100,7 @@ train_features = raw_training_data.drop('damage_grade', axis=1)
 train_labels = raw_training_data['damage_grade']
 # [END define-and-load-data]
 
+gcs_file.close()
 
 # [START categorical-feature-conversion]
 # Since the census data set has categorical features, we need to convert them to numerical values.
