@@ -133,3 +133,7 @@ blob = bucket.blob('{}/{}'.format(
 		datetime.datetime.now().strftime('census_%Y%m%d_%H%M%S'), model))
 blob.upload_from_filename(model)
 # [END export-to-gcs]
+
+
+# Django meetup: mvt (model, view, template)
+
